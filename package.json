@@ -1,0 +1,17 @@
+{
+  "name": "jkglasses.com",
+  "version": "1.0.0",
+  "description": "JK Glasses International - Official Website",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve src",
+    "dev": "npx serve src"
+  },
+  "keywords": [
+    "toughened-glass",
+    "website",
+    "static-site"
+  ],
+  "author": "",
+  "license": "ISC"
+}

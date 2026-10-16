@@ -1,0 +1,338 @@
+{
+  "project": "JK International Website",
+  "version": "2.0.0",
+  "description": "Image asset directory structure and recommended high-resolution replacement mappings for all product cards and hero slides.",
+  "asset_base": "src/assets/images/",
+  "categories": {
+    "hero": [
+      {
+        "expected_file": "hero/hero-glass-architecture.webp",
+        "current_fallback": "assets/images/Home1.png",
+        "recommended_resolution": "1920x1080 (16:9)",
+        "description": "Architectural hero slide 1: Premium modern glass facade building with reflecting sky."
+      },
+      {
+        "expected_file": "hero/hero-aluminium-systems.webp",
+        "current_fallback": "assets/images/Home2.png",
+        "recommended_resolution": "1920x1080 (16:9)",
+        "description": "Architectural hero slide 2: Luxury villa balcony with slimline aluminium sliding doors and black framing."
+      },
+      {
+        "expected_file": "hero/hero-upvc-windows-doors.webp",
+        "current_fallback": "assets/images/Home3.png",
+        "recommended_resolution": "1920x1080 (16:9)",
+        "description": "Architectural hero slide 3: Modern interior living room with high-efficiency white uPVC casement windows."
+      }
+    ],
+    "glass": [
+      {
+        "expected_file": "glass/glass-toughened-safety.webp",
+        "current_fallback": "assets/images/tougenedglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Toughened Safety Glass panels being handled or installed in modern architectural project."
+      },
+      {
+        "expected_file": "glass/glass-laminated-pvb.webp",
+        "current_fallback": "assets/images/laminatedglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Laminated Safety Glass with multi-layer PVB interlayer demonstrating impact resistance."
+      },
+      {
+        "expected_file": "glass/glass-insulated-dgu.webp",
+        "current_fallback": "assets/images/insultaingglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Double Glazed Unit (DGU / IGU) showing aluminum warm-edge spacer and hermetic seal."
+      },
+      {
+        "expected_file": "glass/glass-heat-strengthened.webp",
+        "current_fallback": "assets/images/heatstrengthenedglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Heat strengthened architectural glass installed in exterior curtain wall facade."
+      },
+      {
+        "expected_file": "glass/glass-bullet-resistant.webp",
+        "current_fallback": "assets/images/bulletresistantglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Multi-ply heavy ballistic resistant security glass for banks and executive security."
+      },
+      {
+        "expected_file": "glass/glass-bend-toughened.webp",
+        "current_fallback": "assets/images/bendtoughenedglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Precision cylindrical curved toughened glass installed in panoramic elevator or facade."
+      },
+      {
+        "expected_file": "glass/glass-ceramic-printed.webp",
+        "current_fallback": "assets/images/ceramicprintedglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Ceramic frit printed architectural glass with sun-control dots and custom patterns."
+      },
+      {
+        "expected_file": "glass/glass-designer-frosted.webp",
+        "current_fallback": "assets/images/designerglass.jpg",
+        "recommended_resolution": "800x600 (4:3)",
+        "description": "Acid-etched frosted and fluted decorative glass installed in luxury partition."
+      }
+    ],
+    "aluminium_windows": [
+      {
+        "expected_file": "aluminium/windows/aluminium-two-track-sliding.webp",
+        "current_fallback": "assets/images/aluk3.jpg",
+        "description": "2-track aluminium sliding window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-three-track-sliding.webp",
+        "current_fallback": "assets/images/ad5.jpg",
+        "description": "3-track aluminium sliding window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-four-track-sliding.webp",
+        "current_fallback": "assets/images/project1.jpg",
+        "description": "4-track wide-span sliding window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-sliding-mosquito-mesh.webp",
+        "current_fallback": "assets/images/project4.jpg",
+        "description": "Aluminium sliding window with bug screen sash"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-single-casement.webp",
+        "current_fallback": "assets/images/decorative-window-glass 2.jpg",
+        "description": "Single casement side-hung window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-double-casement.webp",
+        "current_fallback": "assets/images/project2.jpg",
+        "description": "Double casement French window without center post"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-side-hung.webp",
+        "current_fallback": "assets/images/project5.jpg",
+        "description": "Side-hung architectural window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-top-hung.webp",
+        "current_fallback": "assets/images/project6.jpg",
+        "description": "Top-hung awning window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-tilt-and-turn.webp",
+        "current_fallback": "assets/images/project3.jpg",
+        "description": "European tilt-and-turn dual-action window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-fixed-glass.webp",
+        "current_fallback": "assets/images/prod_img1.jpg",
+        "description": "Fixed picture window frame with insulated glass"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-ventilator.webp",
+        "current_fallback": "assets/images/prod_img2.jpg",
+        "description": "Bathroom and utility ventilator window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-louver.webp",
+        "current_fallback": "assets/images/prod_img3.jpg",
+        "description": "Aerofoil / glass louver ventilation window"
+      },
+      {
+        "expected_file": "aluminium/windows/aluminium-bay-corner.webp",
+        "current_fallback": "assets/images/project7.jpg",
+        "description": "Corner welded bay window system"
+      }
+    ],
+    "aluminium_doors": [
+      {
+        "expected_file": "aluminium/doors/aluminium-two-track-sliding-door.webp",
+        "current_fallback": "assets/images/aluk3.jpg",
+        "description": "2-track aluminium sliding patio door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-three-track-sliding-door.webp",
+        "current_fallback": "assets/images/ad5.jpg",
+        "description": "3-track sliding patio door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-four-track-sliding-door.webp",
+        "current_fallback": "assets/images/project1.jpg",
+        "description": "4-track expansive sliding door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-lift-and-slide-door.webp",
+        "current_fallback": "assets/images/Home1.png",
+        "description": "German hardware lift-and-slide patio door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-sliding-mesh-door.webp",
+        "current_fallback": "assets/images/Home2.png",
+        "description": "Patio slider with stainless steel insect screen"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-single-hinged-door.webp",
+        "current_fallback": "assets/images/toughened-glass-door-designs 3.jpg",
+        "description": "Single hinged glass swing door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-double-hinged-door.webp",
+        "current_fallback": "assets/images/project8.jpg",
+        "description": "Double hinged entrance doors"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-french-door.webp",
+        "current_fallback": "assets/images/project9.jpg",
+        "description": "French double glass door with slim stiles"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-glass-entrance-door.webp",
+        "current_fallback": "assets/images/tougenedglass.jpg",
+        "description": "Commercial entrance door with floor spring pivot"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-shopfront-door.webp",
+        "current_fallback": "assets/images/project10.jpg",
+        "description": "Retail showroom shopfront door system"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-office-door.webp",
+        "current_fallback": "assets/images/printed-glass-partitions3.jpg",
+        "description": "Acoustic office partition glass door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-bifold-folding-door.webp",
+        "current_fallback": "assets/images/project1.jpg",
+        "description": "Concertina multi-panel bi-folding patio door"
+      },
+      {
+        "expected_file": "aluminium/doors/aluminium-automatic-sliding-door.webp",
+        "current_fallback": "assets/images/project11.jpg",
+        "description": "Radar automated sliding commercial entrance door"
+      }
+    ],
+    "aluminium_architectural": [
+      {
+        "expected_file": "aluminium/systems/aluminium-curtain-wall-facade.webp",
+        "current_fallback": "assets/images/modern-building-made-crystal.jpg",
+        "description": "Stick / Semi-unitized commercial curtain wall"
+      },
+      {
+        "expected_file": "aluminium/systems/aluminium-structural-glazing.webp",
+        "current_fallback": "assets/images/project12.jpg",
+        "description": "Silicone bonded flush structural glazing facade"
+      },
+      {
+        "expected_file": "aluminium/systems/aluminium-commercial-shopfront.webp",
+        "current_fallback": "assets/images/project13.jpg",
+        "description": "Heavy-duty commercial ground floor shopfront framing"
+      },
+      {
+        "expected_file": "aluminium/systems/aluminium-office-partition.webp",
+        "current_fallback": "assets/images/printed-glass-partitions3.jpg",
+        "description": "Demountable slimline office partition system"
+      }
+    ],
+    "upvc_windows": [
+      {
+        "expected_file": "upvc/windows/upvc-two-track-sliding.webp",
+        "current_fallback": "assets/images/ad5.jpg",
+        "description": "2-track uPVC multi-chamber sliding window"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-three-track-sliding.webp",
+        "current_fallback": "assets/images/project14.jpg",
+        "description": "3-track uPVC sliding window with steel reinforcement"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-sliding-mosquito-mesh.webp",
+        "current_fallback": "assets/images/project15.jpg",
+        "description": "uPVC sliding window with stainless steel bug mesh"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-single-casement.webp",
+        "current_fallback": "assets/images/decorative-window-glass 2.jpg",
+        "description": "Single sash openable uPVC casement window"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-double-casement.webp",
+        "current_fallback": "assets/images/project2.jpg",
+        "description": "French double casement uPVC window"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-tilt-and-turn.webp",
+        "current_fallback": "assets/images/project3.jpg",
+        "description": "Multi-action uPVC tilt & turn window"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-top-hung.webp",
+        "current_fallback": "assets/images/project6.jpg",
+        "description": "Top-hung awning uPVC window"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-fixed-window.webp",
+        "current_fallback": "assets/images/prod_img4.jpg",
+        "description": "Fixed picture window frame"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-combination-window.webp",
+        "current_fallback": "assets/images/project16.jpg",
+        "description": "Coupled fixed and casement combination window"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-bay-window.webp",
+        "current_fallback": "assets/images/project7.jpg",
+        "description": "Polygonal uPVC bay window alcove"
+      },
+      {
+        "expected_file": "upvc/windows/upvc-ventilator.webp",
+        "current_fallback": "assets/images/prod_img5.jpg",
+        "description": "Top-hung frosted uPVC ventilator"
+      }
+    ],
+    "upvc_doors": [
+      {
+        "expected_file": "upvc/doors/upvc-sliding-door.webp",
+        "current_fallback": "assets/images/ad5.jpg",
+        "description": "uPVC patio sliding door system"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-casement-door.webp",
+        "current_fallback": "assets/images/project2.jpg",
+        "description": "Openable uPVC casement door with 3D hinges"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-single-openable-door.webp",
+        "current_fallback": "assets/images/project8.jpg",
+        "description": "Single residential openable door"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-double-openable-door.webp",
+        "current_fallback": "assets/images/project9.jpg",
+        "description": "Double French openable garden door"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-french-door.webp",
+        "current_fallback": "assets/images/project17.jpg",
+        "description": "Full height glass French doors"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-lift-and-slide-door.webp",
+        "current_fallback": "assets/images/Home3.png",
+        "description": "High span uPVC lift-and-slide patio door"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-balcony-door.webp",
+        "current_fallback": "assets/images/project18.jpg",
+        "description": "Weather-sealed balcony and terrace door"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-entrance-door.webp",
+        "current_fallback": "assets/images/toughened-glass-door-designs 3.jpg",
+        "description": "Reinforced security uPVC entrance door"
+      },
+      {
+        "expected_file": "upvc/doors/upvc-sliding-mesh-door.webp",
+        "current_fallback": "assets/images/Home2.png",
+        "description": "Multi-track sliding door with insect screen sash"
+      }
+    ]
+  }
+}
