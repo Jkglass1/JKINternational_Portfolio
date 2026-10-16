@@ -1,7 +1,33 @@
+html {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    overflow-x: hidden !important;
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
 body {
     font-family: 'Poppins', sans-serif !important;
-    overflow-x: hidden;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
 }
+
+body::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
 
 .wf-field-error-active {
     color: red;
@@ -657,20 +683,19 @@ a {
 }
 
 #navbar ul li a {
-    font-size: 1.1em !important;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 500;
     color: #fff;
+    white-space: nowrap;
 }
 
 #navbar ul li a:hover {
-    font-size: 1.1em !important;
-    font-weight: bold;
-    border-bottom: 3px solid #fff;
+    color: #4ade80;
+    border-bottom: none;
 }
 
-
 #navbar ul li {
-    margin-right: 40px;
+    margin-right: 0;
 }
 
 #navbar ul li:last-child {
@@ -678,13 +703,17 @@ a {
 }
 
 a.navbar-brand {
-    width: 120px;
-    height: auto;
-    margin-top: 15px;
+    width: auto;
+    height: 100%;
+    margin-top: 0;
+    display: flex;
+    align-items: center;
 }
 
 a.navbar-brand img {
-    width: 100%;
+    height: 52px;
+    width: auto;
+    object-fit: contain;
 }
 
 .header {
