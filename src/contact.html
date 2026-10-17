@@ -113,7 +113,7 @@
     </div>
    </div>
 
-      <div data-aos="fade-in">
+      <div>
         <div class="container-fluid contact-banner">
           <div class="row">
             <div class="lines">
@@ -143,86 +143,79 @@
                                 <input type='text' style='display:none;' name='actionType' value='Q29udGFjdHM=' />
                                 <input type='hidden' name='rmsg' id='rmsg' value='true' />
                                 <input type='text' style='display:none;' name='returnURL' value='null' />
-                                <div class="form-heading">Contact Us Form</div>
+                                <div class="form-heading" style="font-size:20px;font-weight:700;color:#1b2671;border-bottom:2px solid #f1f5f9;padding-bottom:12px;margin-bottom:18px;">Contact &amp; Quotation Inquiry</div>
                                 <div class="form-content">
-                                  <div class="form-row" style="margin-bottom: 15px;">
-                                    <div class='wf-label'>Business Division / Requirement</div>
+                                  <div class="form-row" style="margin-bottom: 16px;width:100% !important;">
+                                    <div class='wf-label' style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px;">Business Division / Requirement</div>
                                     <div class='wf-field'>
                                       <div class='wf-field-inner'>
-                                        <select id="divisionSelect" class="form-textbox" style="height: 42px;" onchange="updateDivisionInDesc(this)">
-                                          <option value="All Divisions / Turnkey">Complete Turnkey (Glass, Aluminium & uPVC)</option>
-                                          <option value="Glass Processing & Solutions">Glass Processing & Architectural Solutions</option>
-                                          <option value="Aluminium Doors, Windows & Systems">Aluminium Doors, Windows & Systems</option>
-                                          <option value="uPVC Doors, Windows & Systems">uPVC Doors, Windows & Systems</option>
+                                        <select id="divisionSelect" class="form-textbox" style="height:48px !important;padding:10px 14px !important;" onchange="updateDivisionInDesc(this)">
+                                          <option value="All Divisions / Turnkey">Complete Turnkey (Glass, Aluminium &amp; uPVC)</option>
+                                          <option value="Glass Processing &amp; Solutions">Glass Processing &amp; Architectural Solutions</option>
+                                          <option value="Aluminium Doors, Windows &amp; Systems">Aluminium Doors, Windows &amp; Systems</option>
+                                          <option value="uPVC Doors, Windows &amp; Systems">uPVC Doors, Windows &amp; Systems</option>
                                         </select>
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="form-row">
-                                    <div class='wf-label'>First Name</div>
+                                  <div class="form-row" style="margin-bottom: 14px;width:100% !important;">
+                                    <div class='wf-label' style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px;">First Name <span style="color:#ef4444;">*</span></div>
                                     <div class='wf-field wf-field-mandatory'>
                                       <div class='wf-field-inner'>
                                         <input name='First Name' maxlength='40' type='text' value=''
-                                          class='form-textbox' oninput='removeError(this)' />
+                                          class='form-textbox' required placeholder="e.g. Rakesh" oninput='removeError(this)' />
                                       </div>
                                     </div>
-                                    <!-- <input type="text" id="fname" name="fname" class="form-textbox"
-                                      placeholder="Your Name"> -->
                                   </div>
-                                  <div class="form-row">
-                                    <div class='wf-label'>Last Name</div>
+                                  <div class="form-row" style="margin-bottom: 14px;width:100% !important;">
+                                    <div class='wf-label' style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px;">Last Name <span style="color:#ef4444;">*</span></div>
                                     <div class='wf-field wf-field-mandatory'>
                                       <div class='wf-field-inner'>
                                         <input name='Last Name' maxlength='80' type='text' value='' class='form-textbox'
-                                          oninput='removeError(this)' />
+                                          required placeholder="e.g. Kumar" oninput='removeError(this)' />
                                       </div>
                                     </div>
-                                    <!-- <input type="text" id="fname" name="fname" class="form-textbox"
-                                      placeholder="Your Name"> -->
                                   </div>
-                                  <div class="form-row">
-                                    <div class='wf-label'>Email</div>
+                                  <div class="form-row" style="margin-bottom: 14px;width:100% !important;">
+                                    <div class='wf-label' style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px;">Email Address <span style="color:#ef4444;">*</span></div>
                                     <div class='wf-field wf-field-mandatory'>
                                       <div class='wf-field-inner'>
-                                        <input fvalidate='true' ftype='email' name='Email' maxlength='100' type='text'
-                                          value='' class='form-textbox' oninput='removeError(this)' />
+                                        <input fvalidate='true' ftype='email' name='Email' maxlength='100' type='email'
+                                          value='' class='form-textbox' required placeholder="your.name@company.com" oninput='removeError(this)' />
                                       </div>
                                     </div>
-                                    <!-- <input type="text" id="fname" name="fname" class="form-textbox"
-                                      placeholder="Your Email"> -->
                                   </div>
-                                  <div class="form-row">
-                                    <div class='wf-label'>Mobile</div>
+                                  <div class="form-row" style="margin-bottom: 14px;width:100% !important;">
+                                    <div class='wf-label' style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px;">Mobile / WhatsApp Number <span style="color:#ef4444;">*</span></div>
                                     <div class='wf-field wf-field-mandatory'>
                                       <div class='wf-field-inner'>
-                                        <input fvalidate='true' ftype='mobile' name='Mobile' maxlength='30' type='text'
-                                          value='' class='form-textbox' oninput='removeError(this)' />
+                                        <input fvalidate='true' ftype='mobile' name='Mobile' maxlength='30' type='tel'
+                                          value='' class='form-textbox' required placeholder="e.g. 98765 43210" oninput='removeError(this)' />
                                       </div>
                                     </div>
-                                    <!-- <input type="text" id="fname" name="fname" class="form-textbox"
-                                      placeholder="Contact Number"> -->
                                   </div>
-                                  <div class="form-row textarea-width">
-                                    <div class='wf-label'>Description</div>
+                                  <div class="form-row textarea-width" style="margin-bottom: 16px;width:100% !important;">
+                                    <div class='wf-label' style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:6px;">Project Details &amp; Specifications</div>
                                     <div class='wf-field'>
                                       <div class='wf-field-inner'>
-                                        <textarea name='Description' maxlength='32000' type='text'
-                                          class='form-textarea ' style='resize: none;'
+                                        <textarea name='Description' maxlength='32000'
+                                          class='form-textarea' style='resize:vertical;height:100px;'
+                                          placeholder="Mention sizes, glass thickness, aluminium profiles, project site location or quantity..."
                                           oninput='removeError(this)'></textarea>
                                       </div>
                                     </div>
-                                    <!-- <textarea class="form-textarea" rows="4" cols="50" placeholder="Message">
-                                  </textarea> -->
                                   </div>
                                 </div>
-                                <div class="form-button">
-                                  <div class='wf-label' data-ux-empty-label='true'></div>
-                                  <div class='wform-btn-wrap'>
-                                    <input id='formsubmit' type='submit' class='contact-submit' value='Submit'
-                                      onclick='handleFormSubmit()' />
+                                <div class="form-button" style="margin-top:10px;">
+                                  <button id='formsubmit' type='submit' class='jk-btn-quote-submit' onclick='handleFormSubmit()'>
+                                    <span>Submit Inquiry to Factory Team</span>
+                                    <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                  </button>
+                                  <div class="jk-form-trust-row" style="margin-top:12px;font-size:12px;color:#64748b;display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+                                    <span>&#128274; 100% Confidential</span>
+                                    <span>&#127981; Direct Factory Pricing</span>
+                                    <span>&#9201; Fast Response within 2–4 Hours</span>
                                   </div>
-                                  <!-- <button name="subject" type="submit" value="Submit" class="contact-submit">Send
-                                    Enquiry</button> -->
                                 </div>
 
                               </form>
@@ -775,9 +768,44 @@
       console.log('Form submission attempted');
       if (checkMandatory195384000001370001()) {
         console.log('Form submission valid');
+
+        // Dispatch to Free Google Sheets & Email Notification service
+        var firstName = document.querySelector("#BiginWebToRecordForm195384000001370001 [name='First Name']");
+        var lastName = document.querySelector("#BiginWebToRecordForm195384000001370001 [name='Last Name']");
+        var email = document.querySelector("#BiginWebToRecordForm195384000001370001 [name='Email']");
+        var mobile = document.querySelector("#BiginWebToRecordForm195384000001370001 [name='Mobile']");
+        var desc = document.querySelector("#BiginWebToRecordForm195384000001370001 [name='Description']");
+        var sel = document.getElementById('divisionSelect');
+
+        if (window.dispatchQuotationLead) {
+          window.dispatchQuotationLead({
+            firstName: firstName ? firstName.value.trim() : '',
+            lastName: lastName ? lastName.value.trim() : '',
+            fullName: ((firstName ? firstName.value.trim() : '') + ' ' + (lastName ? lastName.value.trim() : '')).trim(),
+            email: email ? email.value.trim() : '',
+            phone: mobile ? mobile.value.trim() : '',
+            division: (sel && sel.value) ? sel.value : 'General Inquiry',
+            requirements: desc ? desc.value.trim() : '',
+            sourcePage: 'Contact Us Page'
+          });
+        }
+
         document.getElementById('BiginWebToRecordForm195384000001370001').submit();
-        resetForm();
+
+        var submitBtn = document.getElementById('formsubmit');
+        if (submitBtn) {
+          submitBtn.innerHTML = '<span>Inquiry Sent Successfully &#10003;</span>';
+          setTimeout(function() {
+            submitBtn.innerHTML = '<span>Submit Inquiry to Factory Team</span><svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor;"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>';
+            resetForm();
+          }, 4000);
+        } else {
+          resetForm();
+        }
       } else {
+        console.log('Form validation failed');
+      }
+    }
     function updateDivisionInDesc(sel) {
       var desc = document.querySelector("textarea[name='Description']");
       if (desc && sel) {
@@ -806,6 +834,7 @@
       }
     });
   </script>
+  <script src="assets/js/lead-config.js"></script>
   <script id='wf_script'
     src='https://bigin.zoho.in/crm/WebformScriptServlet?rid=ad2a81e7ad61103d2abee3c37cefb52f1fe6fa6f5ab0953a3583dac626771dc1d1cc688f9b153577e37eb14baa95940bgid4164e90ff62efcd86f7b69b375ae9e58f91f61ffa034f377a8e4d39ac5f9fe79'></script>
 </body>
