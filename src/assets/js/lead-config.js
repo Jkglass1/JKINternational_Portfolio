@@ -21,7 +21,16 @@ window.JK_LEAD_CONFIG = {
   fallbackCc: "jkglasses@gmail.com",
 
   // Factory WhatsApp direct chat
-  whatsAppNumber: "918566008869"
+  whatsAppNumber: "918566008869",
+
+  // Website sales assistant (assets/js/jk-chatbot.js). Leads and full conversations
+  // go DIRECTLY into the JK International ERP (CRM → Leads, source "Website Chatbot").
+  // This is a public URL, not a secret: the ERP endpoint protects itself (origin
+  // allow-list, rate limit, per-conversation token). Setup: /docs/CHATBOT_SETUP.md
+  chatbot: {
+    enabled: true,
+    erpEndpoint: "https://jk-international-erp.vercel.app/api/public/website-chatbot"
+  }
 };
 
 /**
@@ -44,14 +53,20 @@ window.dispatchQuotationLead = async function(leadData) {
         }
       }
 
+      // Give up after 15s so a stalled connection doesn't leave the visitor waiting
+      var controller = window.AbortController ? new AbortController() : null;
+      var timeout = controller ? setTimeout(function () { controller.abort(); }, 15000) : null;
+
       await fetch(webAppUrl, {
         method: "POST",
         mode: "no-cors", // Google Apps Script redirects after post; no-cors allows seamless execution
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: payload.toString()
+        body: payload.toString(),
+        signal: controller ? controller.signal : undefined
       });
+      clearTimeout(timeout);
 
       return {
         success: true,
@@ -59,14 +74,14 @@ window.dispatchQuotationLead = async function(leadData) {
         message: "Your quotation request has been recorded and delivered to our engineering desk!"
       };
     } catch (err) {
-      console.warn("Google Script dispatch error, falling back:", err);
+      console.warn("Google Script dispatch error:", err);
     }
   }
 
-  // Graceful fallback when URL is not yet configured or offline
+  // Not configured or offline: report failure so the form can offer WhatsApp / phone instead
   return {
-    success: true,
-    method: "demo_or_fallback",
-    message: "Inquiry received! Our factory team will reach out to you shortly."
+    success: false,
+    method: "unavailable",
+    message: "We couldn't send your inquiry right now. Please reach us on WhatsApp or phone."
   };
 };

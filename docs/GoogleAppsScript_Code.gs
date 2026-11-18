@@ -45,6 +45,37 @@ function testEmail() {
  * Handle incoming POST requests from website forms
  */
 function doPost(e) {
+  var data = parsePostData_(e);
+
+  // Website AI chatbot requests are handled in GoogleAppsScript_Chatbot.gs
+  if (typeof data.action === "string" && data.action.indexOf("chat.") === 0 && typeof handleChatbotRequest === "function") {
+    return handleChatbotRequest(data);
+  }
+
+  return handleQuotationRequest_(data);
+}
+
+/**
+ * Parse payload (supports JSON and FormData/URL-encoded)
+ */
+function parsePostData_(e) {
+  var data = {};
+  if (e && e.postData && e.postData.contents) {
+    try {
+      data = JSON.parse(e.postData.contents);
+    } catch (err) {
+      data = e.parameter || {};
+    }
+  } else if (e && e.parameter) {
+    data = e.parameter;
+  }
+  return data && typeof data === "object" ? data : {};
+}
+
+/**
+ * Quotation & contact forms: record the lead in the first sheet and email the team
+ */
+function handleQuotationRequest_(data) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000); // Wait up to 10s for concurrent submissions
 
@@ -72,18 +103,6 @@ function doPost(e) {
       headerRange.setFontColor("#ffffff");
       headerRange.setHorizontalAlignment("center");
       sheet.setFrozenRows(1);
-    }
-
-    // Parse payload (supports JSON and FormData/URL-encoded)
-    var data = {};
-    if (e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (err) {
-        data = e.parameter || {};
-      }
-    } else if (e.parameter) {
-      data = e.parameter;
     }
 
     var timestamp = Utilities.formatDate(new Date(), "Asia/Kolkata", "dd MMM yyyy, hh:mm:ss a");
@@ -240,6 +259,8 @@ function doGet(e) {
     .createTextOutput(JSON.stringify({
       status: "online",
       service: "JK International Lead Dispatcher",
+      // Lets the website chatbot check that GoogleAppsScript_Chatbot.gs is deployed
+      chatbot: typeof chatbotStatus === "function" ? chatbotStatus() : null,
       timestamp: new Date().toISOString()
     }))
     .setMimeType(ContentService.MimeType.JSON);

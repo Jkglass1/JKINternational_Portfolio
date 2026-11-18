@@ -22,7 +22,7 @@ jkglasses.com/
 │   ├── aluminium-systems.html # Aluminium Systems (Sliding, Casement, Partitions)
 │   ├── upvc-systems.html    # uPVC Systems (Sliding, Tilt & Turn, Multi-Chamber)
 │   ├── about.html           # About Us page
-│   ├── contact.html         # Contact page with Division Selector & Zoho CRM
+│   ├── contact.html         # Contact page with Division Selector & quotation form
 │   ├── infrastructure.html  # Manufacturing / Factory Units (Kandrori & Jalandhar)
 │   ├── projects.html        # Projects / Gallery page
 │   ├── whatwedo.html        # Capabilities overview
