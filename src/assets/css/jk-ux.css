@@ -1,0 +1,436 @@
+/* ==========================================================================
+   JK International - Site-wide UX Enhancements
+   Scroll progress, back-to-top, counters, ripples, mobile action bar
+   Paired with assets/js/jk-ux.js
+   ========================================================================== */
+
+/* --- Smooth cross-page fades (Chrome 126+, Safari 18.2+; ignored elsewhere) --- */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.28s;
+}
+
+/* Keep in-page anchor targets clear of the fixed header */
+html {
+  scroll-padding-top: 96px;
+}
+
+/* --- Keyboard focus rings (mouse clicks stay clean) --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--jk-green, #37ab32) !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- Scroll progress bar --- */
+.jk-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 10001;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--jk-green, #37ab32) 0%, #0284c7 100%);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* --- Back to top button with progress ring --- */
+.jk-back-to-top {
+  position: fixed;
+  right: 26px;
+  bottom: 100px;
+  z-index: 9998;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--jk-navy, #1b2671);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(12, 21, 74, 0.28);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s, background 0.2s ease;
+}
+
+.jk-back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.jk-back-to-top:hover {
+  background: var(--jk-navy-dark, #0c154a);
+  transform: translateY(-3px) scale(1.04);
+}
+
+.jk-back-to-top svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.jk-back-to-top .jk-ring-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 2.5;
+}
+
+.jk-back-to-top .jk-ring-fill {
+  fill: none;
+  stroke: var(--jk-green, #37ab32);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.jk-back-to-top .jk-arrow {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- Click ripple on buttons --- */
+.jk-ripple-host {
+  position: relative;
+  overflow: hidden;
+}
+
+.jk-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.28;
+  transform: scale(0);
+  pointer-events: none;
+  animation: jkRipple 0.6s ease-out forwards;
+}
+
+@keyframes jkRipple {
+  to { transform: scale(2.6); opacity: 0; }
+}
+
+/* Steady digit widths while counters animate */
+.jk-counting {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Glass shine sweep on product images (matches division cards) --- */
+.cat-product-img::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: left 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.cat-product-card:hover .cat-product-img::after {
+  left: 150%;
+}
+
+/* --- Images fade in as they load --- */
+img.jk-img-loading {
+  opacity: 0;
+}
+
+img.jk-img-loaded {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* --- Mobile quick-action bar --- */
+.jk-mobile-bar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .jk-mobile-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10000;
+    display: flex;
+    gap: 8px;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -6px 20px rgba(12, 21, 74, 0.12);
+    transform: translateY(110%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .jk-mobile-bar.is-visible {
+    transform: translateY(0);
+  }
+
+  .jk-mobile-bar a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 46px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none !important;
+    color: var(--jk-navy, #1b2671);
+    background: #eef1fb;
+  }
+
+  .jk-mobile-bar a svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+  }
+
+  .jk-mobile-bar a.jk-bar-wa {
+    color: #ffffff;
+    background: #25d366;
+  }
+
+  .jk-mobile-bar a.jk-bar-quote {
+    color: #ffffff;
+    background: var(--jk-navy, #1b2671);
+  }
+
+  /* The bar carries WhatsApp on phones, so the floating button steps aside */
+  body.jk-mobile-bar-on .whatsapp {
+    display: none !important;
+  }
+
+  body.jk-has-mobile-bar {
+    padding-bottom: 66px;
+  }
+
+  .jk-back-to-top {
+    right: 14px;
+    bottom: 80px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* ==========================================================================
+   Quotation / contact form states (assets/js/jk-lead-form.js)
+   ========================================================================== */
+
+/* Spam trap: off-screen for people, still in the DOM for bots */
+.jk-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Division choices are real buttons now (keyboard + screen reader friendly) */
+button.jk-div-pill {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  line-height: inherit;
+}
+
+/* Inline field errors */
+.jk-field-error {
+  display: none;
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #b91c1c;
+}
+
+.jk-form-field.has-error .jk-field-error {
+  display: block;
+}
+
+.jk-form-field.has-error .jk-input-control {
+  border-color: #ef4444 !important;
+  background: #fffafa !important;
+}
+
+.jk-form-field.has-error .jk-input-control:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.14) !important;
+}
+
+.jk-form-field.has-error .jk-input-icon {
+  color: #ef4444;
+}
+
+.jk-form-field.is-valid .jk-input-control {
+  border-color: #86efac !important;
+}
+
+.jk-form-field.is-valid .jk-input-icon {
+  color: #16a34a;
+}
+
+.jk-form-alert a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Sending state */
+.jk-btn-quote-submit.is-loading,
+.jk-btn-quote-submit:disabled {
+  cursor: progress;
+  opacity: 0.9;
+  transform: none !important;
+}
+
+.jk-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: jkSpin 0.7s linear infinite;
+}
+
+@keyframes jkSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success card shown in place of the form */
+.jk-form-success {
+  text-align: center;
+  padding: 36px 20px;
+  outline: none;
+  animation: jkSuccessIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes jkSuccessIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.jk-success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 8px #f0fdf4;
+}
+
+.jk-success-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: #16a34a;
+}
+
+.jk-form-success h4 {
+  margin: 0 0 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--jk-navy, #1b2671);
+}
+
+.jk-form-success p {
+  max-width: 420px;
+  margin: 0 auto 22px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.jk-success-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.jk-success-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: #25d366;
+  color: #ffffff !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none !important;
+  box-shadow: 0 8px 18px -4px rgba(37, 211, 102, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.jk-success-wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -6px rgba(37, 211, 102, 0.55);
+}
+
+.jk-success-wa svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.jk-success-again {
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--jk-navy, #1b2671);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* --- Respect reduced-motion preferences --- */
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  .jk-back-to-top,
+  .jk-mobile-bar,
+  img.jk-img-loaded {
+    transition: none !important;
+  }
+
+  .jk-form-success {
+    animation: none !important;
+  }
+
+  .jk-ripple,
+  .cat-product-img::after {
+    display: none !important;
+  }
+}

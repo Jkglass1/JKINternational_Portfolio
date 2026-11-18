@@ -5,7 +5,8 @@
   "main": "index.html",
   "scripts": {
     "start": "npx serve src",
-    "dev": "npx serve src"
+    "dev": "npx serve src",
+    "test:chatbot": "node tests/chatbot-backend.test.js"
   },
   "keywords": [
     "toughened-glass",

@@ -12,6 +12,8 @@
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/division-styles.css" rel="stylesheet">
+  <link href="assets/css/jk-ux.css" rel="stylesheet">
+  <link href="assets/css/jk-chatbot.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/css/aos.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZENRVBZCGG"></script>
@@ -965,7 +967,7 @@
 </div>
 
 <!-- ============================================================
-     CONTACT INQUIRY SECTION (Zoho Bigin CRM - PRESERVED)
+     CONTACT INQUIRY SECTION (quotation form, sends to Google Sheets)
      ============================================================ -->
 <div id="contact-inquiry" class="container-fluid" style="padding:85px 0;background:#f8fafc;">
   <div class="container">
@@ -1073,174 +1075,107 @@
               <p class="jk-quote-panel-desc">Submit your project sizes, specifications or drawing requirements. Our technical estimation desk will contact you promptly.</p>
             </div>
 
-            <!-- Feedback Alert Area -->
-            <div id="jk-quote-alert" class="jk-form-alert"></div>
+            <form class="jk-lead-form" data-lead-form data-source="Homepage Quotation Desk" novalidate>
+              <div class="jk-form-alert" data-form-alert role="alert" aria-live="assertive"></div>
 
-            <div class="wf-wrapper" id="BiginWebToRecordFormDiv195384000001370001">
-              <form id="BiginWebToRecordForm195384000001370001" name="BiginWebToRecordForm195384000001370001"
-                action="https://bigin.zoho.in/crm/WebForm" method="POST" enctype="multipart/form-data" 
-                target="hidden195384000001370001Frame" onSubmit="return handleQuoteFormSubmit(event)"
-                accept-charset="UTF-8">
-                
-                <!-- Zoho Bigin CRM Required Hidden Fields -->
-                <input type="text" style="display:none;" name="xnQsjsdp" value="4164e90ff62efcd86f7b69b375ae9e58f91f61ffa034f377a8e4d39ac5f9fe79" />
-                <input type="hidden" name="zc_gad" id="zc_gad" value="" />
-                <input type="text" style="display:none;" name="xmIwtLD" value="ad2a81e7ad61103d2abee3c37cefb52f1fe6fa6f5ab0953a3583dac626771dc1d1cc688f9b153577e37eb14baa95940b" />
-                <input type="text" style="display:none;" name="actionType" value="Q29udGFjdHM=" />
-                <input type="hidden" name="rmsg" id="rmsg" value="true" />
-                <input type="text" style="display:none;" name="returnURL" value="null" />
+              <!-- Spam trap: hidden from people, bots fill it in -->
+              <div class="jk-hp" aria-hidden="true">
+                <label for="lead-website">Leave this empty</label>
+                <input id="lead-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+              </div>
+              <input type="hidden" name="division" value="All Divisions / Turnkey" />
 
-                <!-- BUSINESS DIVISION INTERACTIVE SELECTOR -->
-                <div class="jk-division-select-wrap">
-                  <label class="jk-field-label" for="division-choice">
-                    <span>Select Business Division <span class="req">*</span></span>
-                    <small style="color:#64748b;font-weight:400;">Choose manufacturing division</small>
+              <!-- BUSINESS DIVISION SELECTOR -->
+              <div class="jk-division-select-wrap">
+                <div class="jk-field-label" id="lead-division-label">
+                  <span>What do you need?</span>
+                  <small style="color:#64748b;font-weight:400;">Pick one</small>
+                </div>
+                <div class="jk-division-pills" role="radiogroup" aria-labelledby="lead-division-label">
+                  <button type="button" class="jk-div-pill active" role="radio" aria-checked="true" data-key="turnkey" data-val="All Divisions / Turnkey">
+                    <span class="pill-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h2v3h-2V5zm0 5h2v3h-2v-3zm-4-5h2v3H8V5zm0 5h2v3H8v-3zm-3 7h14v2H5v-2zm14-4h-2v-3h2v3zm0-5h-2V5h2v3z"/></svg></span>
+                    <span class="pill-text">Complete Turnkey<small>Glass + Aluminium / uPVC</small></span>
+                  </button>
+                  <button type="button" class="jk-div-pill" role="radio" aria-checked="false" data-key="glass" data-val="Glass Processing and Solutions">
+                    <span class="pill-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H5v-4h6v4zm0-6H5V7h6v4zm8 6h-6v-4h6v4zm0-6h-6V7h6v4z"/></svg></span>
+                    <span class="pill-text">Glass Solutions<small>Toughened, DGU, Laminated</small></span>
+                  </button>
+                  <button type="button" class="jk-div-pill" role="radio" aria-checked="false" data-key="aluminium" data-val="Aluminium Doors, Windows and Systems">
+                    <span class="pill-icon"><svg viewBox="0 0 24 24"><path d="M19 19V5c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v14H3v2h18v-2h-2zm-4-6h-2v-2h2v2z"/></svg></span>
+                    <span class="pill-text">Aluminium Systems<small>Doors, Windows &amp; Facades</small></span>
+                  </button>
+                  <button type="button" class="jk-div-pill" role="radio" aria-checked="false" data-key="upvc" data-val="uPVC Doors, Windows and Systems">
+                    <span class="pill-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14h-4v-4h4v4zm0-6h-4V7h4v4zm-6 6H7v-4h4v4zm0-6H7V7h4v4z"/></svg></span>
+                    <span class="pill-text">uPVC Systems<small>Multi-Chamber Energy-Saving</small></span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="jk-quote-grid">
+                <!-- Name -->
+                <div class="jk-form-field">
+                  <label class="jk-field-label" for="lead-name"><span>Your Name <span class="req">*</span></span></label>
+                  <div class="jk-input-box">
+                    <span class="jk-input-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></span>
+                    <input id="lead-name" name="name" maxlength="80" type="text" class="jk-input-control" required placeholder="e.g. Rakesh Kumar" autocomplete="name" aria-describedby="lead-name-error" />
+                  </div>
+                  <p class="jk-field-error" id="lead-name-error" data-error-for="name"></p>
+                </div>
+
+                <!-- Mobile -->
+                <div class="jk-form-field">
+                  <label class="jk-field-label" for="lead-phone"><span>Mobile / WhatsApp <span class="req">*</span></span></label>
+                  <div class="jk-input-box">
+                    <span class="jk-input-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>
+                    <input id="lead-phone" name="phone" maxlength="20" type="tel" inputmode="tel" class="jk-input-control" required placeholder="e.g. 98765 43210" autocomplete="tel" aria-describedby="lead-phone-error" />
+                  </div>
+                  <p class="jk-field-error" id="lead-phone-error" data-error-for="phone"></p>
+                </div>
+
+                <!-- Email (optional) -->
+                <div class="jk-form-field full-span">
+                  <label class="jk-field-label" for="lead-email">
+                    <span>Email</span>
+                    <small style="color:#64748b;font-weight:400;">Optional &mdash; for a written quote</small>
                   </label>
-                  
-                  <div class="jk-division-pills" role="radiogroup" aria-label="Business Division">
-                    <div class="jk-div-pill active" data-val="All Divisions / Turnkey" onclick="selectDivisionPill(this, 'All Divisions / Turnkey')">
-                      <div class="pill-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 2h2v3h-2V5zm0 5h2v3h-2v-3zm-4-5h2v3H8V5zm0 5h2v3H8v-3zm-3 7h14v2H5v-2zm14-4h-2v-3h2v3zm0-5h-2V5h2v3z"/></svg>
-                      </div>
-                      <div class="pill-text">
-                        Complete Turnkey
-                        <small>Glass + Aluminium / uPVC</small>
-                      </div>
-                    </div>
-
-                    <div class="jk-div-pill" data-val="Glass Processing and Solutions" onclick="selectDivisionPill(this, 'Glass Processing and Solutions')">
-                      <div class="pill-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H5v-4h6v4zm0-6H5V7h6v4zm8 6h-6v-4h6v4zm0-6h-6V7h6v4z"/></svg>
-                      </div>
-                      <div class="pill-text">
-                        Glass Solutions
-                        <small>Toughened, DGU, Laminated</small>
-                      </div>
-                    </div>
-
-                    <div class="jk-div-pill" data-val="Aluminium Doors, Windows and Systems" onclick="selectDivisionPill(this, 'Aluminium Doors, Windows and Systems')">
-                      <div class="pill-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19 19V5c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v14H3v2h18v-2h-2zm-4-6h-2v-2h2v2z"/></svg>
-                      </div>
-                      <div class="pill-text">
-                        Aluminium Systems
-                        <small>Doors, Windows &amp; Facades</small>
-                      </div>
-                    </div>
-
-                    <div class="jk-div-pill" data-val="uPVC Doors, Windows and Systems" onclick="selectDivisionPill(this, 'uPVC Doors, Windows and Systems')">
-                      <div class="pill-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 14h-4v-4h4v4zm0-6h-4V7h4v4zm-6 6H7v-4h4v4zm0-6H7V7h4v4z"/></svg>
-                      </div>
-                      <div class="pill-text">
-                        uPVC Systems
-                        <small>Multi-Chamber Energy-Saving</small>
-                      </div>
-                    </div>
+                  <div class="jk-input-box">
+                    <span class="jk-input-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
+                    <input id="lead-email" name="email" maxlength="100" type="email" class="jk-input-control" placeholder="your.name@company.com" autocomplete="email" aria-describedby="lead-email-error" />
                   </div>
-
-                  <!-- Native select kept fully synchronized for CRM form compatibility -->
-                  <select id="division-choice" class="jk-native-select" onchange="syncSelectToPills(this)">
-                    <option value="All Divisions / Turnkey">Complete Turnkey (Glass + Aluminium / uPVC)</option>
-                    <option value="Glass Processing and Solutions">Glass Processing &amp; Architectural Solutions</option>
-                    <option value="Aluminium Doors, Windows and Systems">Aluminium Doors, Windows &amp; Systems</option>
-                    <option value="uPVC Doors, Windows and Systems">uPVC Doors, Windows &amp; Systems</option>
-                  </select>
+                  <p class="jk-field-error" id="lead-email-error" data-error-for="email"></p>
                 </div>
 
-                <!-- 2-COLUMN INPUT GRID -->
-                <div class="jk-quote-grid">
-                  <!-- First Name -->
-                  <div class="jk-form-field">
-                    <label class="jk-field-label" for="quote-first-name">First Name <span class="req">*</span></label>
-                    <div class="jk-input-box">
-                      <span class="jk-input-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                      </span>
-                      <input id="quote-first-name" name="First Name" maxlength="40" type="text" class="jk-input-control form-textbox" required placeholder="e.g. Rakesh" autocomplete="given-name" />
-                    </div>
-                  </div>
-
-                  <!-- Last Name -->
-                  <div class="jk-form-field">
-                    <label class="jk-field-label" for="quote-last-name">Last Name <span class="req">*</span></label>
-                    <div class="jk-input-box">
-                      <span class="jk-input-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                      </span>
-                      <input id="quote-last-name" name="Last Name" maxlength="80" type="text" class="jk-input-control form-textbox" required placeholder="e.g. Kumar" autocomplete="family-name" />
-                    </div>
-                  </div>
-
-                  <!-- Email Address -->
-                  <div class="jk-form-field">
-                    <label class="jk-field-label" for="quote-email">Work / Personal Email <span class="req">*</span></label>
-                    <div class="jk-input-box">
-                      <span class="jk-input-icon">
-                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                      </span>
-                      <input id="quote-email" fvalidate="true" ftype="email" name="Email" maxlength="100" type="email" class="jk-input-control form-textbox" required placeholder="your.name@company.com" autocomplete="email" />
-                    </div>
-                  </div>
-
-                  <!-- Mobile Number -->
-                  <div class="jk-form-field">
-                    <label class="jk-field-label" for="quote-mobile">Mobile / WhatsApp Number <span class="req">*</span></label>
-                    <div class="jk-input-box">
-                      <span class="jk-input-icon">
-                        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-                      </span>
-                      <input id="quote-mobile" fvalidate="true" ftype="mobile" name="Mobile" maxlength="30" type="tel" inputmode="tel" class="jk-input-control form-textbox" required placeholder="e.g. 98765 43210" autocomplete="tel" />
-                    </div>
-                  </div>
-
-                  <!-- Requirements Textarea (Full Width) -->
-                  <div class="jk-form-field full-span">
-                    <label class="jk-field-label" for="inquiry-description">
-                      <span>Project Details &amp; Specifications</span>
-                      <small style="color:#64748b;font-weight:400;">Optional</small>
-                    </label>
-                    <textarea id="inquiry-description" name="Description" maxlength="32000" class="jk-textarea-control form-textarea" placeholder="Please mention sizes, glass thickness (e.g. 12mm Toughened, 24mm DGU), aluminium series, project site location or quantity..."></textarea>
-                    
-                    <!-- Quick-Add Specs Chips -->
-                    <div class="jk-quick-chips-wrap">
-                      <span class="jk-quick-chips-label">Quick-Add:</span>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'Toughened Glass')">+ Toughened Glass</button>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'DGU / Insulated')">+ DGU / Insulated</button>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'Laminated PVB')">+ Laminated PVB</button>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'Sliding Doors & Windows')">+ Sliding Doors</button>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'Curtain Wall / Facade')">+ Facade / Curtain Wall</button>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'Commercial Project')">+ Commercial</button>
-                      <button type="button" class="jk-chip-btn" onclick="addRequirementChip(this, 'Site Measurement Needed')">+ Site Visit Needed</button>
-                    </div>
+                <!-- Project details (optional) -->
+                <div class="jk-form-field full-span">
+                  <label class="jk-field-label" for="lead-details">
+                    <span>Project Details</span>
+                    <small style="color:#64748b;font-weight:400;">Optional</small>
+                  </label>
+                  <textarea id="lead-details" name="requirements" maxlength="5000" class="jk-textarea-control" placeholder="Sizes, glass thickness (e.g. 12mm toughened, 24mm DGU), aluminium series, site location or quantity..."></textarea>
+                  <div class="jk-quick-chips-wrap">
+                    <span class="jk-quick-chips-label">Quick-Add:</span>
+                    <button type="button" class="jk-chip-btn" data-tag="Toughened Glass" aria-pressed="false">+ Toughened Glass</button>
+                    <button type="button" class="jk-chip-btn" data-tag="DGU / Insulated" aria-pressed="false">+ DGU / Insulated</button>
+                    <button type="button" class="jk-chip-btn" data-tag="Laminated PVB" aria-pressed="false">+ Laminated PVB</button>
+                    <button type="button" class="jk-chip-btn" data-tag="Sliding Doors &amp; Windows" aria-pressed="false">+ Sliding Doors</button>
+                    <button type="button" class="jk-chip-btn" data-tag="Curtain Wall / Facade" aria-pressed="false">+ Facade / Curtain Wall</button>
+                    <button type="button" class="jk-chip-btn" data-tag="Commercial Project" aria-pressed="false">+ Commercial</button>
+                    <button type="button" class="jk-chip-btn" data-tag="Site Measurement Needed" aria-pressed="false">+ Site Visit Needed</button>
                   </div>
                 </div>
+              </div>
 
-                <!-- SUBMIT BUTTON -->
-                <button id="formsubmit" type="submit" class="jk-btn-quote-submit">
-                  <span>Submit Inquiry to Factory Team</span>
-                  <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
+              <button type="submit" class="jk-btn-quote-submit">
+                <span>Get My Free Quote</span>
+                <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+              </button>
 
-                <!-- TRUST STRIP -->
-                <div class="jk-form-trust-row">
-                  <span class="jk-form-trust-item">
-                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                    100% Confidential
-                  </span>
-                  <span class="jk-form-trust-item">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                    Direct Factory Pricing
-                  </span>
-                  <span class="jk-form-trust-item">
-                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                    Quotes in 2–4 Business Hours
-                  </span>
-                </div>
-
-              </form>
-            </div>
-            <iframe id="quote-target-frame" name="hidden195384000001370001Frame" style="display:none;"></iframe>
+              <div class="jk-form-trust-row">
+                <span class="jk-form-trust-item"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>100% Confidential</span>
+                <span class="jk-form-trust-item"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Direct Factory Pricing</span>
+                <span class="jk-form-trust-item"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>Quotes in 2&ndash;4 Business Hours</span>
+              </div>
+            </form>
           </div>
 
         </div>
@@ -1249,14 +1184,6 @@
   </div>
 </div>
 
-<!-- WhatsApp Float -->
-<div class="whatsapp">
-  <span>
-    <a href="https://wa.me/918566008869?text=Hello%20JK%20International,%20I%20am%20interested%20in%20your%20Glass,%20Aluminium%20or%20uPVC%20solutions." target="_blank" rel="noopener">
-      <img src="assets/images/whatsapp.png" alt="WhatsApp JK International" />
-    </a>
-  </span>
-</div>
 
 <!-- ============================================================
      COMPACT MODERN FOOTER (PREMIUM REDESIGN)
@@ -1400,163 +1327,16 @@
       else { $('.header').removeClass('shrink'); }
     });
   });
-  function validateForm195384000001370001() {
-    return true;
-  }
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('[data-aos]').forEach(function (el) { el.removeAttribute('data-aos'); });
   }
-
-  /* --- Interactive Quotation Form Logic --- */
-  function selectDivisionPill(el, val) {
-    var pills = document.querySelectorAll('.jk-div-pill');
-    pills.forEach(function (p) { p.classList.remove('active'); });
-    el.classList.add('active');
-    
-    var sel = document.getElementById('division-choice');
-    if (sel) {
-      sel.value = val;
-    }
-    
-    // Auto update prefix in description if needed
-    var desc = document.getElementById('inquiry-description');
-    if (desc) {
-      var prefix = '[Inquiry for ' + val + ']: ';
-      if (!desc.value.startsWith('[Inquiry for')) {
-        if (desc.value.trim() !== '') {
-          desc.value = prefix + desc.value;
-        }
-      } else {
-        desc.value = desc.value.replace(/^\[Inquiry for [^\]]+\]:\s*/, prefix);
-      }
-    }
-  }
-
-  function syncSelectToPills(sel) {
-    var val = sel.value;
-    var pills = document.querySelectorAll('.jk-div-pill');
-    pills.forEach(function (p) {
-      if (p.getAttribute('data-val') === val) {
-        p.classList.add('active');
-      } else {
-        p.classList.remove('active');
-      }
-    });
-  }
-
-  function addRequirementChip(btn, tag) {
-    var desc = document.getElementById('inquiry-description');
-    if (!desc) return;
-    
-    var current = desc.value.trim();
-    if (current.indexOf(tag) === -1) {
-      if (current === '') {
-        desc.value = tag;
-      } else {
-        desc.value = current + ', ' + tag;
-      }
-      btn.classList.add('added');
-      btn.innerHTML = '&#10003; ' + tag;
-    }
-  }
-
-  function handleQuoteFormSubmit(e) {
-    var form = document.getElementById('BiginWebToRecordForm195384000001370001');
-    var alertBox = document.getElementById('jk-quote-alert');
-    if (!form || !alertBox) return true;
-
-    var firstName = form.querySelector('[name="First Name"]');
-    var lastName = form.querySelector('[name="Last Name"]');
-    var email = form.querySelector('[name="Email"]');
-    var mobile = form.querySelector('[name="Mobile"]');
-    var desc = document.getElementById('inquiry-description');
-    var sel = document.getElementById('division-choice');
-
-    // Validation checks
-    var errors = [];
-    if (!firstName || !firstName.value.trim()) {
-      errors.push('Please enter your First Name.');
-      if (firstName) firstName.focus();
-    } else if (!lastName || !lastName.value.trim()) {
-      errors.push('Please enter your Last Name.');
-      if (lastName) lastName.focus();
-    } else if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-      errors.push('Please enter a valid email address (e.g. name@domain.com).');
-      if (email) email.focus();
-    } else if (!mobile || !mobile.value.trim() || mobile.value.replace(/[^0-9]/g, '').length < 10) {
-      errors.push('Please enter a valid 10-digit mobile or WhatsApp number.');
-      if (mobile) mobile.focus();
-    }
-
-    if (errors.length > 0) {
-      e.preventDefault();
-      alertBox.className = 'jk-form-alert error';
-      alertBox.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#991b1b"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span>' + errors[0] + '</span>';
-      alertBox.style.display = 'flex';
-      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      return false;
-    }
-
-    // Prefix division to description if not already prefixed
-    var divisionVal = (sel && sel.value) ? sel.value : 'Complete Turnkey';
-    if (desc && sel && sel.value) {
-      var prefix = '[Inquiry for ' + sel.value + ']: ';
-      if (!desc.value.startsWith('[Inquiry for')) {
-        desc.value = prefix + desc.value;
-      }
-    }
-
-    var submitBtn = document.getElementById('formsubmit');
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = '0.85';
-      submitBtn.innerHTML = '<span>Submitting to Factory Desk...</span>';
-    }
-
-    // Dispatch to Free Google Sheets & Email Notification service
-    if (window.dispatchQuotationLead) {
-      window.dispatchQuotationLead({
-        firstName: firstName.value.trim(),
-        lastName: lastName.value.trim(),
-        fullName: (firstName.value.trim() + ' ' + lastName.value.trim()).trim(),
-        email: email.value.trim(),
-        phone: mobile.value.trim(),
-        division: divisionVal,
-        requirements: desc ? desc.value.trim() : '',
-        sourcePage: 'Homepage Quotation Desk'
-      });
-    }
-
-    // Show success alert
-    setTimeout(function() {
-      alertBox.className = 'jk-form-alert success';
-      alertBox.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="#166534"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span><strong>Thank you!</strong> Your quotation inquiry has been received. Our factory engineering team will contact you shortly.</span>';
-      alertBox.style.display = 'flex';
-      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.innerHTML = '<span>Inquiry Sent Successfully &#10003;</span>';
-      }
-
-      // Reset form fields
-      setTimeout(function() {
-        form.reset();
-        document.querySelectorAll('.jk-chip-btn').forEach(function(b) {
-          b.classList.remove('added');
-          b.innerHTML = b.innerHTML.replace(/^✓\s*/, '+ ');
-        });
-        if (submitBtn) {
-          submitBtn.innerHTML = '<span>Submit Inquiry to Factory Team</span><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>';
-        }
-      }, 5000);
-    }, 700);
-
-    return true; // allows posting into hidden iframe
-  }
 </script>
 <script src="assets/js/lead-config.js"></script>
+<script src="assets/js/jk-lead-form.js"></script>
 <script src="assets/js/jk-homepage.js"></script>
+<script src="assets/js/jk-ux.js" defer></script>
+<script src="assets/js/jk-chatbot-faq.js" defer></script>
+<script src="assets/js/jk-chatbot-catalog.js" defer></script>
+<script src="assets/js/jk-chatbot.js" defer></script>
 </body>
 </html>
