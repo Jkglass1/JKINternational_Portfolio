@@ -205,3 +205,22 @@
     }
   }
 })();
+
+/* --- Pillar cards: soft glow follows the cursor --- */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!window.matchMedia('(hover: hover)').matches) return;
+  document.querySelectorAll('.jk-pillar').forEach(function (card) {
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+})();
+
+/* --- Footer: always show the current year --- */
+(function () {
+  var year = String(new Date().getFullYear());
+  document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = year; });
+})();
