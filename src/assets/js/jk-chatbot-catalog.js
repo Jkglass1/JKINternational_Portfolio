@@ -18,7 +18,14 @@
                  the chatbot then says so honestly and offers the sales team.
        page      website page for "Read more"
        ask       requirement questions for a quotation (default: the category's)
-   - Subcategory grouping is for navigation only.
+       styles    [{ label, text }] the types a product comes in (sliding,
+                 casement…). Information only: shown when the visitor asks
+                 "Which types are available?", never a choice they must make.
+       keywords  extra words that point a typed question at this product
+                 ("sliding window"); any language, matched like the label.
+   - Subcategory grouping is for navigation only. A subcategory with ONE
+     product skips the product step (Aluminium / uPVC: Windows, Doors…):
+     visitors are not asked to know window or door types.
    - To add a language: add its key to every text and to LANGS in jk-chatbot.js.
    ========================================================================== */
 
@@ -328,59 +335,62 @@ window.JK_CHATBOT_CATALOG = {
         quantity: { en: 'e.g. 8 windows and 2 doors', hi: 'जैसे 8 खिड़कियाँ और 2 दरवाज़े', pa: 'ਜਿਵੇਂ 8 ਖਿੜਕੀਆਂ ਅਤੇ 2 ਦਰਵਾਜ਼ੇ' },
         specifications: { en: 'e.g. 5 ft × 4 ft, black powder coat, DGU glass', hi: 'जैसे 5 फुट × 4 फुट, ब्लैक पाउडर कोट, DGU ग्लास', pa: 'ਜਿਵੇਂ 5 ਫੁੱਟ × 4 ਫੁੱਟ, ਬਲੈਕ ਪਾਊਡਰ ਕੋਟ, DGU ਗਲਾਸ' }
       },
+      // One product per group: visitors pick Windows / Doors / Facades, never a
+      // window or door style (sliding, casement…). The styles stay as information
+      // (`styles`, shown for "Which types are available?") and as `keywords`, so a
+      // typed "sliding window" still finds the right product.
       subcategories: [
         {
           id: 'al-windows',
           label: { en: 'Windows', hi: 'खिड़कियाँ', pa: 'ਖਿੜਕੀਆਂ' },
           products: [
             {
-              id: 'al-sliding-windows',
-              label: { en: 'Sliding Windows', hi: 'स्लाइडिंग खिड़कियाँ', pa: 'ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ' },
+              id: 'al-windows',
+              label: { en: 'Aluminium Windows', hi: 'एल्युमिनियम खिड़कियाँ', pa: 'ਐਲੂਮੀਨੀਅਮ ਖਿੜਕੀਆਂ' },
               summary: {
-                en: '2-, 3- and 4-track aluminium sliding windows, with an option for stainless steel 304 mosquito mesh.',
-                hi: '2, 3 और 4 ट्रैक एल्युमिनियम स्लाइडिंग खिड़कियाँ, स्टेनलेस स्टील 304 मच्छरदानी के विकल्प के साथ।',
-                pa: '2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ ਐਲੂਮੀਨੀਅਮ ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ, ਸਟੇਨਲੈੱਸ ਸਟੀਲ 304 ਮੱਛਰਦਾਨੀ ਦੇ ਵਿਕਲਪ ਨਾਲ।'
+                en: 'Aluminium windows in sliding, openable, fixed, louvre and corner styles. Not sure which type you need? Share your requirement or a photo, and our team will suggest the right one.',
+                hi: 'स्लाइडिंग, खुलने वाली, फ़िक्स्ड, लूवर और कॉर्नर डिज़ाइन में एल्युमिनियम खिड़कियाँ। पता नहीं कौन-सी चाहिए? अपनी ज़रूरत या फ़ोटो भेजें, हमारी टीम सही खिड़की सुझाएगी।',
+                pa: 'ਸਲਾਈਡਿੰਗ, ਖੁੱਲ੍ਹਣ ਵਾਲੀਆਂ, ਫ਼ਿਕਸਡ, ਲੂਵਰ ਅਤੇ ਕਾਰਨਰ ਡਿਜ਼ਾਈਨ ਵਿੱਚ ਐਲੂਮੀਨੀਅਮ ਖਿੜਕੀਆਂ। ਪਤਾ ਨਹੀਂ ਕਿਹੜੀ ਚਾਹੀਦੀ ਹੈ? ਆਪਣੀ ਲੋੜ ਜਾਂ ਫ਼ੋਟੋ ਭੇਜੋ, ਸਾਡੀ ਟੀਮ ਸਹੀ ਖਿੜਕੀ ਸੁਝਾਏਗੀ।'
               },
               points: [
-                { en: '3-track: wider opening with a dedicated mesh track', hi: '3 ट्रैक: ज़्यादा खुलाव और अलग मेश ट्रैक', pa: '3 ਟ੍ਰੈਕ: ਵੱਧ ਖੁੱਲ੍ਹ ਅਤੇ ਵੱਖਰਾ ਮੈਸ਼ ਟ੍ਰੈਕ' },
-                { en: '4-track: large openings, centre-parting or stacking', hi: '4 ट्रैक: बड़े खुलाव, बीच से या एक तरफ़ खुलने वाले', pa: '4 ਟ੍ਰੈਕ: ਵੱਡੀ ਖੁੱਲ੍ਹ, ਵਿਚਕਾਰੋਂ ਜਾਂ ਇੱਕ ਪਾਸੇ ਖੁੱਲ੍ਹਣ ਵਾਲੀਆਂ' },
-                { en: 'Silent tandem rollers', hi: 'बिना आवाज़ वाले टैंडम रोलर', pa: 'ਬਿਨਾਂ ਆਵਾਜ਼ ਵਾਲੇ ਟੈਂਡਮ ਰੋਲਰ' }
-              ],
-              uses: { en: 'Homes, offices and commercial buildings.', hi: 'घर, ऑफ़िस और कमर्शियल इमारतें।', pa: 'ਘਰ, ਦਫ਼ਤਰ ਅਤੇ ਕਮਰਸ਼ੀਅਲ ਇਮਾਰਤਾਂ।' },
-              page: 'aluminium-systems.html'
-            },
-            {
-              id: 'al-casement-windows',
-              label: { en: 'Casement & Tilt-Turn Windows', hi: 'केसमेंट और टिल्ट-टर्न खिड़कियाँ', pa: 'ਕੇਸਮੈਂਟ ਅਤੇ ਟਿਲਟ-ਟਰਨ ਖਿੜਕੀਆਂ' },
-              summary: {
-                en: 'Single and double casement (no fixed centre mullion), side-hung, top-hung (awning) and tilt-and-turn windows.',
-                hi: 'सिंगल और डबल केसमेंट (बीच में कोई फ़िक्स्ड म्युलियन नहीं), साइड-हंग, टॉप-हंग (ऑनिंग) और टिल्ट-एंड-टर्न खिड़कियाँ।',
-                pa: 'ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਕੇਸਮੈਂਟ (ਵਿਚਕਾਰ ਕੋਈ ਫ਼ਿਕਸਡ ਮਿਊਲੀਅਨ ਨਹੀਂ), ਸਾਈਡ-ਹੰਗ, ਟੌਪ-ਹੰਗ (ਔਨਿੰਗ) ਅਤੇ ਟਿਲਟ-ਐਂਡ-ਟਰਨ ਖਿੜਕੀਆਂ।'
-              },
-              points: [
-                { en: 'Friction stays and multi-point locks', hi: 'फ़्रिक्शन स्टे और मल्टी-पॉइंट लॉक', pa: 'ਫ਼੍ਰਿਕਸ਼ਨ ਸਟੇ ਅਤੇ ਮਲਟੀ-ਪੁਆਇੰਟ ਲੌਕ' },
-                { en: 'Double or triple EPDM gaskets against rain, air and noise', hi: 'बारिश, हवा और शोर से बचाव के लिए डबल या ट्रिपल EPDM गैस्केट', pa: 'ਮੀਂਹ, ਹਵਾ ਅਤੇ ਸ਼ੋਰ ਤੋਂ ਬਚਾਅ ਲਈ ਡਬਲ ਜਾਂ ਟ੍ਰਿਪਲ EPDM ਗੈਸਕੇਟ' }
-              ],
-              uses: { en: 'Homes and offices where full opening and tight sealing are needed.', hi: 'घर और ऑफ़िस जहाँ पूरा खुलाव और कसकर सीलिंग चाहिए।', pa: 'ਘਰ ਅਤੇ ਦਫ਼ਤਰ ਜਿੱਥੇ ਪੂਰੀ ਖੁੱਲ੍ਹ ਅਤੇ ਕਸਵੀਂ ਸੀਲਿੰਗ ਚਾਹੀਦੀ ਹੈ।' },
-              page: 'aluminium-systems.html'
-            },
-            {
-              id: 'al-fixed-windows',
-              label: { en: 'Fixed, Louvre & Bay Windows', hi: 'फ़िक्स्ड, लूवर और बे खिड़कियाँ', pa: 'ਫ਼ਿਕਸਡ, ਲੂਵਰ ਅਤੇ ਬੇ ਖਿੜਕੀਆਂ' },
-              summary: {
-                en: 'Fixed glass windows, ventilators, louvre windows (fixed or adjustable blades) and bay / corner windows (90° to 135°).',
-                hi: 'फ़िक्स्ड ग्लास खिड़कियाँ, वेंटिलेटर, लूवर खिड़कियाँ (फ़िक्स्ड या एडजस्टेबल ब्लेड) और बे / कॉर्नर खिड़कियाँ (90° से 135°)।',
-                pa: 'ਫ਼ਿਕਸਡ ਗਲਾਸ ਖਿੜਕੀਆਂ, ਵੈਂਟੀਲੇਟਰ, ਲੂਵਰ ਖਿੜਕੀਆਂ (ਫ਼ਿਕਸਡ ਜਾਂ ਐਡਜਸਟੇਬਲ ਬਲੇਡ) ਅਤੇ ਬੇ / ਕਾਰਨਰ ਖਿੜਕੀਆਂ (90° ਤੋਂ 135°)।'
-              },
-              points: [
+                { en: 'Sliding windows in 2, 3 or 4 tracks, with an optional stainless steel 304 mosquito mesh', hi: '2, 3 या 4 ट्रैक वाली स्लाइडिंग खिड़कियाँ, स्टेनलेस स्टील 304 मच्छरदानी के विकल्प के साथ', pa: '2, 3 ਜਾਂ 4 ਟ੍ਰੈਕ ਵਾਲੀਆਂ ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ, ਸਟੇਨਲੈੱਸ ਸਟੀਲ 304 ਮੱਛਰਦਾਨੀ ਦੇ ਵਿਕਲਪ ਨਾਲ' },
+                { en: 'Openable windows with friction stays and multi-point locks', hi: 'फ़्रिक्शन स्टे और मल्टी-पॉइंट लॉक वाली खुलने वाली खिड़कियाँ', pa: 'ਫ਼੍ਰਿਕਸ਼ਨ ਸਟੇ ਅਤੇ ਮਲਟੀ-ਪੁਆਇੰਟ ਲੌਕ ਵਾਲੀਆਂ ਖੁੱਲ੍ਹਣ ਵਾਲੀਆਂ ਖਿੜਕੀਆਂ' },
+                { en: 'Double or triple EPDM gaskets against rain, air and noise', hi: 'बारिश, हवा और शोर से बचाव के लिए डबल या ट्रिपल EPDM गैस्केट', pa: 'ਮੀਂਹ, ਹਵਾ ਅਤੇ ਸ਼ੋਰ ਤੋਂ ਬਚਾਅ ਲਈ ਡਬਲ ਜਾਂ ਟ੍ਰਿਪਲ EPDM ਗੈਸਕੇਟ' },
                 { en: 'Fixed windows take glass up to 28 mm (suits DGU)', hi: 'फ़िक्स्ड खिड़कियों में 28 mm तक का ग्लास (DGU के लिए उपयुक्त)', pa: 'ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ ਵਿੱਚ 28 mm ਤੱਕ ਦਾ ਗਲਾਸ (DGU ਲਈ ਢੁਕਵਾਂ)' }
               ],
-              uses: { en: 'Large views, ventilation and corner designs.', hi: 'बड़े व्यू, वेंटिलेशन और कॉर्नर डिज़ाइन।', pa: 'ਵੱਡੇ ਵਿਊ, ਹਵਾਦਾਰੀ ਅਤੇ ਕਾਰਨਰ ਡਿਜ਼ਾਈਨ।' },
+              uses: { en: 'Homes, offices and commercial buildings.', hi: 'घर, ऑफ़िस और कमर्शियल इमारतें।', pa: 'ਘਰ, ਦਫ਼ਤਰ ਅਤੇ ਕਮਰਸ਼ੀਅਲ ਇਮਾਰਤਾਂ।' },
               specs: {
-                en: 'Fixed glass windows have a glass pocket of up to **28 mm**, which suits DGU. Bay and corner windows from 90° to 135°.',
-                hi: 'फ़िक्स्ड ग्लास खिड़कियों में **28 mm** तक का ग्लास पॉकेट है, जो DGU के लिए उपयुक्त है। बे और कॉर्नर खिड़कियाँ 90° से 135° तक।',
-                pa: 'ਫ਼ਿਕਸਡ ਗਲਾਸ ਖਿੜਕੀਆਂ ਵਿੱਚ **28 mm** ਤੱਕ ਦਾ ਗਲਾਸ ਪੌਕੇਟ ਹੈ, ਜੋ DGU ਲਈ ਢੁਕਵਾਂ ਹੈ। ਬੇ ਅਤੇ ਕਾਰਨਰ ਖਿੜਕੀਆਂ 90° ਤੋਂ 135° ਤੱਕ।'
+                en: 'Sliding windows in **2-, 3- and 4-track** options. Fixed glass windows have a glass pocket of up to **28 mm**, which suits DGU. Bay and corner windows from 90° to 135°.',
+                hi: 'स्लाइडिंग खिड़कियाँ **2, 3 और 4 ट्रैक** विकल्प में। फ़िक्स्ड ग्लास खिड़कियों में **28 mm** तक का ग्लास पॉकेट है, जो DGU के लिए उपयुक्त है। बे और कॉर्नर खिड़कियाँ 90° से 135° तक।',
+                pa: 'ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ **2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ** ਵਿਕਲਪ ਵਿੱਚ। ਫ਼ਿਕਸਡ ਗਲਾਸ ਖਿੜਕੀਆਂ ਵਿੱਚ **28 mm** ਤੱਕ ਦਾ ਗਲਾਸ ਪੌਕੇਟ ਹੈ, ਜੋ DGU ਲਈ ਢੁਕਵਾਂ ਹੈ। ਬੇ ਅਤੇ ਕਾਰਨਰ ਖਿੜਕੀਆਂ 90° ਤੋਂ 135° ਤੱਕ।'
               },
+              styles: [
+                {
+                  label: { en: 'Sliding', hi: 'स्लाइडिंग', pa: 'ਸਲਾਈਡਿੰਗ' },
+                  text: {
+                    en: '2-, 3- and 4-track sliding windows with silent tandem rollers, with an option for stainless steel 304 mosquito mesh.',
+                    hi: 'बिना आवाज़ वाले टैंडम रोलर के साथ 2, 3 और 4 ट्रैक स्लाइडिंग खिड़कियाँ, स्टेनलेस स्टील 304 मच्छरदानी के विकल्प के साथ।',
+                    pa: 'ਬਿਨਾਂ ਆਵਾਜ਼ ਵਾਲੇ ਟੈਂਡਮ ਰੋਲਰ ਨਾਲ 2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ, ਸਟੇਨਲੈੱਸ ਸਟੀਲ 304 ਮੱਛਰਦਾਨੀ ਦੇ ਵਿਕਲਪ ਨਾਲ।'
+                  }
+                },
+                {
+                  label: { en: 'Openable (casement & tilt-turn)', hi: 'खुलने वाली (केसमेंट और टिल्ट-टर्न)', pa: 'ਖੁੱਲ੍ਹਣ ਵਾਲੀਆਂ (ਕੇਸਮੈਂਟ ਅਤੇ ਟਿਲਟ-ਟਰਨ)' },
+                  text: {
+                    en: 'Single and double casement (no fixed centre mullion), side-hung, top-hung (awning) and tilt-and-turn windows. Best where full opening and tight sealing are needed.',
+                    hi: 'सिंगल और डबल केसमेंट (बीच में कोई फ़िक्स्ड म्युलियन नहीं), साइड-हंग, टॉप-हंग (ऑनिंग) और टिल्ट-एंड-टर्न खिड़कियाँ। जहाँ पूरा खुलाव और कसकर सीलिंग चाहिए, वहाँ सबसे अच्छी।',
+                    pa: 'ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਕੇਸਮੈਂਟ (ਵਿਚਕਾਰ ਕੋਈ ਫ਼ਿਕਸਡ ਮਿਊਲੀਅਨ ਨਹੀਂ), ਸਾਈਡ-ਹੰਗ, ਟੌਪ-ਹੰਗ (ਔਨਿੰਗ) ਅਤੇ ਟਿਲਟ-ਐਂਡ-ਟਰਨ ਖਿੜਕੀਆਂ। ਜਿੱਥੇ ਪੂਰੀ ਖੁੱਲ੍ਹ ਅਤੇ ਕਸਵੀਂ ਸੀਲਿੰਗ ਚਾਹੀਦੀ ਹੈ, ਉੱਥੇ ਸਭ ਤੋਂ ਵਧੀਆ।'
+                  }
+                },
+                {
+                  label: { en: 'Fixed, louvre & bay', hi: 'फ़िक्स्ड, लूवर और बे', pa: 'ਫ਼ਿਕਸਡ, ਲੂਵਰ ਅਤੇ ਬੇ' },
+                  text: {
+                    en: 'Fixed glass windows, ventilators, louvre windows (fixed or adjustable blades) and bay / corner windows (90° to 135°), for large views, ventilation and corner designs.',
+                    hi: 'फ़िक्स्ड ग्लास खिड़कियाँ, वेंटिलेटर, लूवर खिड़कियाँ (फ़िक्स्ड या एडजस्टेबल ब्लेड) और बे / कॉर्नर खिड़कियाँ (90° से 135°), बड़े व्यू, वेंटिलेशन और कॉर्नर डिज़ाइन के लिए।',
+                    pa: 'ਫ਼ਿਕਸਡ ਗਲਾਸ ਖਿੜਕੀਆਂ, ਵੈਂਟੀਲੇਟਰ, ਲੂਵਰ ਖਿੜਕੀਆਂ (ਫ਼ਿਕਸਡ ਜਾਂ ਐਡਜਸਟੇਬਲ ਬਲੇਡ) ਅਤੇ ਬੇ / ਕਾਰਨਰ ਖਿੜਕੀਆਂ (90° ਤੋਂ 135°), ਵੱਡੇ ਵਿਊ, ਹਵਾਦਾਰੀ ਅਤੇ ਕਾਰਨਰ ਡਿਜ਼ਾਈਨ ਲਈ।'
+                  }
+                }
+              ],
+              keywords: ['window', 'sliding window', 'casement', 'tilt turn', 'louvre', 'louver', 'bay window', 'corner window', 'fixed window', 'ventilator', 'खिड़क', 'ਖਿੜਕ'],
               page: 'aluminium-systems.html'
             }
           ]
@@ -390,51 +400,52 @@ window.JK_CHATBOT_CATALOG = {
           label: { en: 'Doors', hi: 'दरवाज़े', pa: 'ਦਰਵਾਜ਼ੇ' },
           products: [
             {
-              id: 'al-sliding-doors',
-              label: { en: 'Sliding & Lift-and-Slide Doors', hi: 'स्लाइडिंग और लिफ़्ट-एंड-स्लाइड दरवाज़े', pa: 'ਸਲਾਈਡਿੰਗ ਅਤੇ ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ' },
+              id: 'al-doors',
+              label: { en: 'Aluminium Doors', hi: 'एल्युमिनियम दरवाज़े', pa: 'ਐਲੂਮੀਨੀਅਮ ਦਰਵਾਜ਼ੇ' },
               summary: {
-                en: '2-, 3- and 4-track sliding doors, lift-and-slide doors and sliding doors with mosquito mesh.',
-                hi: '2, 3 और 4 ट्रैक स्लाइडिंग दरवाज़े, लिफ़्ट-एंड-स्लाइड दरवाज़े और मच्छरदानी वाले स्लाइडिंग दरवाज़े।',
-                pa: '2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ ਅਤੇ ਮੱਛਰਦਾਨੀ ਵਾਲੇ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ।'
+                en: 'Aluminium doors for homes, shops and offices: sliding, hinged, folding and automatic doors. Not sure which type suits your opening? Share your requirement or a photo, and our team will suggest the right one.',
+                hi: 'घर, दुकान और ऑफ़िस के लिए एल्युमिनियम दरवाज़े: स्लाइडिंग, हिंज्ड, फ़ोल्डिंग और ऑटोमैटिक दरवाज़े। पता नहीं आपके खुलाव के लिए कौन-सा सही है? अपनी ज़रूरत या फ़ोटो भेजें, हमारी टीम सही दरवाज़ा सुझाएगी।',
+                pa: 'ਘਰ, ਦੁਕਾਨ ਅਤੇ ਦਫ਼ਤਰ ਲਈ ਐਲੂਮੀਨੀਅਮ ਦਰਵਾਜ਼ੇ: ਸਲਾਈਡਿੰਗ, ਹਿੰਜਡ, ਫ਼ੋਲਡਿੰਗ ਅਤੇ ਆਟੋਮੈਟਿਕ ਦਰਵਾਜ਼ੇ। ਪਤਾ ਨਹੀਂ ਤੁਹਾਡੀ ਖੁੱਲ੍ਹ ਲਈ ਕਿਹੜਾ ਸਹੀ ਹੈ? ਆਪਣੀ ਲੋੜ ਜਾਂ ਫ਼ੋਟੋ ਭੇਜੋ, ਸਾਡੀ ਟੀਮ ਸਹੀ ਦਰਵਾਜ਼ਾ ਸੁਝਾਏਗੀ।'
               },
               points: [
-                { en: 'Lift-and-slide sashes up to 400 kg', hi: 'लिफ़्ट-एंड-स्लाइड सैश 400 kg तक', pa: 'ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਸੈਸ਼ 400 kg ਤੱਕ' }
-              ],
-              uses: { en: 'Balconies, patios and large openings.', hi: 'बालकनी, पैटियो और बड़े खुलाव।', pa: 'ਬਾਲਕਨੀ, ਪੈਟੀਓ ਅਤੇ ਵੱਡੀਆਂ ਖੁੱਲ੍ਹਾਂ।' },
-              specs: {
-                en: 'Lift-and-slide door sashes up to **400 kg**. 2-, 3- and 4-track options.',
-                hi: 'लिफ़्ट-एंड-स्लाइड दरवाज़े के सैश **400 kg** तक। 2, 3 और 4 ट्रैक विकल्प।',
-                pa: 'ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ ਦੇ ਸੈਸ਼ **400 kg** ਤੱਕ। 2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ ਵਿਕਲਪ।'
-              },
-              page: 'aluminium-systems.html'
-            },
-            {
-              id: 'al-hinged-doors',
-              label: { en: 'Hinged, French & Entrance Doors', hi: 'हिंज्ड, फ़्रेंच और एंट्रेंस दरवाज़े', pa: 'ਹਿੰਜਡ, ਫ਼੍ਰੈਂਚ ਅਤੇ ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ' },
-              summary: {
-                en: 'Single and double hinged doors, French doors, glass entrance and shopfront doors, and office doors with acoustic drop seals.',
-                hi: 'सिंगल और डबल हिंज्ड दरवाज़े, फ़्रेंच दरवाज़े, ग्लास एंट्रेंस और शॉपफ़्रंट दरवाज़े, और एकॉस्टिक ड्रॉप सील वाले ऑफ़िस दरवाज़े।',
-                pa: 'ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਹਿੰਜਡ ਦਰਵਾਜ਼ੇ, ਫ਼੍ਰੈਂਚ ਦਰਵਾਜ਼ੇ, ਗਲਾਸ ਐਂਟਰੈਂਸ ਅਤੇ ਸ਼ੌਪਫ਼੍ਰੰਟ ਦਰਵਾਜ਼ੇ, ਅਤੇ ਐਕੋਸਟਿਕ ਡ੍ਰੌਪ ਸੀਲ ਵਾਲੇ ਦਫ਼ਤਰ ਦਰਵਾਜ਼ੇ।'
-              },
-              points: [
-                { en: 'Glass entrance doors with floor spring or overhead closer', hi: 'फ़्लोर स्प्रिंग या ओवरहेड क्लोज़र वाले ग्लास एंट्रेंस दरवाज़े', pa: 'ਫ਼ਲੋਰ ਸਪ੍ਰਿੰਗ ਜਾਂ ਓਵਰਹੈੱਡ ਕਲੋਜ਼ਰ ਵਾਲੇ ਗਲਾਸ ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ' }
-              ],
-              uses: { en: 'Homes, shops and offices.', hi: 'घर, दुकानें और ऑफ़िस।', pa: 'ਘਰ, ਦੁਕਾਨਾਂ ਅਤੇ ਦਫ਼ਤਰ।' },
-              page: 'aluminium-systems.html'
-            },
-            {
-              id: 'al-bifold-doors',
-              label: { en: 'Bi-Fold & Automatic Doors', hi: 'बाई-फ़ोल्ड और ऑटोमैटिक दरवाज़े', pa: 'ਬਾਈ-ਫ਼ੋਲਡ ਅਤੇ ਆਟੋਮੈਟਿਕ ਦਰਵਾਜ਼ੇ' },
-              summary: {
-                en: 'Folding / bi-fold doors with 3 to 7 leaves, and automatic sliding doors with a radar sensor and emergency battery backup.',
-                hi: '3 से 7 पल्लों वाले फ़ोल्डिंग / बाई-फ़ोल्ड दरवाज़े, और रडार सेंसर व इमरजेंसी बैटरी बैकअप वाले ऑटोमैटिक स्लाइडिंग दरवाज़े।',
-                pa: '3 ਤੋਂ 7 ਪੱਲਿਆਂ ਵਾਲੇ ਫ਼ੋਲਡਿੰਗ / ਬਾਈ-ਫ਼ੋਲਡ ਦਰਵਾਜ਼ੇ, ਅਤੇ ਰਡਾਰ ਸੈਂਸਰ ਤੇ ਐਮਰਜੈਂਸੀ ਬੈਟਰੀ ਬੈਕਅੱਪ ਵਾਲੇ ਆਟੋਮੈਟਿਕ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ।'
-              },
-              points: [
-                { en: 'Bi-fold: 3 to 7 leaves', hi: 'बाई-फ़ोल्ड: 3 से 7 पल्ले', pa: 'ਬਾਈ-ਫ਼ੋਲਡ: 3 ਤੋਂ 7 ਪੱਲੇ' },
+                { en: 'Sliding doors in 2, 3 or 4 tracks; lift-and-slide sashes up to 400 kg', hi: '2, 3 या 4 ट्रैक स्लाइडिंग दरवाज़े; लिफ़्ट-एंड-स्लाइड सैश 400 kg तक', pa: '2, 3 ਜਾਂ 4 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ; ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਸੈਸ਼ 400 kg ਤੱਕ' },
+                { en: 'Hinged, French, glass entrance and shopfront doors', hi: 'हिंज्ड, फ़्रेंच, ग्लास एंट्रेंस और शॉपफ़्रंट दरवाज़े', pa: 'ਹਿੰਜਡ, ਫ਼੍ਰੈਂਚ, ਗਲਾਸ ਐਂਟਰੈਂਸ ਅਤੇ ਸ਼ੌਪਫ਼੍ਰੰਟ ਦਰਵਾਜ਼ੇ' },
+                { en: 'Bi-fold doors with 3 to 7 leaves', hi: '3 से 7 पल्लों वाले बाई-फ़ोल्ड दरवाज़े', pa: '3 ਤੋਂ 7 ਪੱਲਿਆਂ ਵਾਲੇ ਬਾਈ-ਫ਼ੋਲਡ ਦਰਵਾਜ਼ੇ' },
                 { en: 'Automatic doors keep working on battery backup in an emergency', hi: 'ऑटोमैटिक दरवाज़े इमरजेंसी में बैटरी बैकअप पर चलते हैं', pa: 'ਆਟੋਮੈਟਿਕ ਦਰਵਾਜ਼ੇ ਐਮਰਜੈਂਸੀ ਵਿੱਚ ਬੈਟਰੀ ਬੈਕਅੱਪ ’ਤੇ ਚੱਲਦੇ ਹਨ' }
               ],
-              uses: { en: 'Wide openings, showrooms, malls and offices.', hi: 'चौड़े खुलाव, शोरूम, मॉल और ऑफ़िस।', pa: 'ਚੌੜੀਆਂ ਖੁੱਲ੍ਹਾਂ, ਸ਼ੋਅਰੂਮ, ਮਾਲ ਅਤੇ ਦਫ਼ਤਰ।' },
+              uses: { en: 'Homes, balconies, shops, showrooms, malls and offices.', hi: 'घर, बालकनी, दुकानें, शोरूम, मॉल और ऑफ़िस।', pa: 'ਘਰ, ਬਾਲਕਨੀ, ਦੁਕਾਨਾਂ, ਸ਼ੋਅਰੂਮ, ਮਾਲ ਅਤੇ ਦਫ਼ਤਰ।' },
+              specs: {
+                en: 'Lift-and-slide door sashes up to **400 kg**. Sliding doors in 2-, 3- and 4-track options; bi-fold doors with 3 to 7 leaves.',
+                hi: 'लिफ़्ट-एंड-स्लाइड दरवाज़े के सैश **400 kg** तक। स्लाइडिंग दरवाज़े 2, 3 और 4 ट्रैक विकल्प में; बाई-फ़ोल्ड दरवाज़े 3 से 7 पल्लों में।',
+                pa: 'ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ ਦੇ ਸੈਸ਼ **400 kg** ਤੱਕ। ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ 2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ ਵਿਕਲਪ ਵਿੱਚ; ਬਾਈ-ਫ਼ੋਲਡ ਦਰਵਾਜ਼ੇ 3 ਤੋਂ 7 ਪੱਲਿਆਂ ਵਿੱਚ।'
+              },
+              styles: [
+                {
+                  label: { en: 'Sliding & lift-and-slide', hi: 'स्लाइडिंग और लिफ़्ट-एंड-स्लाइड', pa: 'ਸਲਾਈਡਿੰਗ ਅਤੇ ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ' },
+                  text: {
+                    en: '2-, 3- and 4-track sliding doors, lift-and-slide doors and sliding doors with mosquito mesh, for balconies, patios and large openings.',
+                    hi: '2, 3 और 4 ट्रैक स्लाइडिंग दरवाज़े, लिफ़्ट-एंड-स्लाइड दरवाज़े और मच्छरदानी वाले स्लाइडिंग दरवाज़े, बालकनी, पैटियो और बड़े खुलाव के लिए।',
+                    pa: '2, 3 ਅਤੇ 4 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ ਅਤੇ ਮੱਛਰਦਾਨੀ ਵਾਲੇ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਬਾਲਕਨੀ, ਪੈਟੀਓ ਅਤੇ ਵੱਡੀਆਂ ਖੁੱਲ੍ਹਾਂ ਲਈ।'
+                  }
+                },
+                {
+                  label: { en: 'Hinged, French & entrance', hi: 'हिंज्ड, फ़्रेंच और एंट्रेंस', pa: 'ਹਿੰਜਡ, ਫ਼੍ਰੈਂਚ ਅਤੇ ਐਂਟਰੈਂਸ' },
+                  text: {
+                    en: 'Single and double hinged doors, French doors, glass entrance and shopfront doors (floor spring or overhead closer), and office doors with acoustic drop seals.',
+                    hi: 'सिंगल और डबल हिंज्ड दरवाज़े, फ़्रेंच दरवाज़े, ग्लास एंट्रेंस और शॉपफ़्रंट दरवाज़े (फ़्लोर स्प्रिंग या ओवरहेड क्लोज़र), और एकॉस्टिक ड्रॉप सील वाले ऑफ़िस दरवाज़े।',
+                    pa: 'ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਹਿੰਜਡ ਦਰਵਾਜ਼ੇ, ਫ਼੍ਰੈਂਚ ਦਰਵਾਜ਼ੇ, ਗਲਾਸ ਐਂਟਰੈਂਸ ਅਤੇ ਸ਼ੌਪਫ਼੍ਰੰਟ ਦਰਵਾਜ਼ੇ (ਫ਼ਲੋਰ ਸਪ੍ਰਿੰਗ ਜਾਂ ਓਵਰਹੈੱਡ ਕਲੋਜ਼ਰ), ਅਤੇ ਐਕੋਸਟਿਕ ਡ੍ਰੌਪ ਸੀਲ ਵਾਲੇ ਦਫ਼ਤਰ ਦਰਵਾਜ਼ੇ।'
+                  }
+                },
+                {
+                  label: { en: 'Bi-fold & automatic', hi: 'बाई-फ़ोल्ड और ऑटोमैटिक', pa: 'ਬਾਈ-ਫ਼ੋਲਡ ਅਤੇ ਆਟੋਮੈਟਿਕ' },
+                  text: {
+                    en: 'Folding / bi-fold doors with 3 to 7 leaves, and automatic sliding doors with a radar sensor and emergency battery backup, for wide openings, showrooms, malls and offices.',
+                    hi: '3 से 7 पल्लों वाले फ़ोल्डिंग / बाई-फ़ोल्ड दरवाज़े, और रडार सेंसर व इमरजेंसी बैटरी बैकअप वाले ऑटोमैटिक स्लाइडिंग दरवाज़े, चौड़े खुलाव, शोरूम, मॉल और ऑफ़िस के लिए।',
+                    pa: '3 ਤੋਂ 7 ਪੱਲਿਆਂ ਵਾਲੇ ਫ਼ੋਲਡਿੰਗ / ਬਾਈ-ਫ਼ੋਲਡ ਦਰਵਾਜ਼ੇ, ਅਤੇ ਰਡਾਰ ਸੈਂਸਰ ਤੇ ਐਮਰਜੈਂਸੀ ਬੈਟਰੀ ਬੈਕਅੱਪ ਵਾਲੇ ਆਟੋਮੈਟਿਕ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਚੌੜੀਆਂ ਖੁੱਲ੍ਹਾਂ, ਸ਼ੋਅਰੂਮ, ਮਾਲ ਅਤੇ ਦਫ਼ਤਰ ਲਈ।'
+                  }
+                }
+              ],
+              keywords: ['door', 'sliding door', 'lift and slide', 'hinged door', 'french door', 'entrance door', 'bi fold', 'bifold', 'folding door', 'automatic door', 'दरवाज', 'ਦਰਵਾਜ'],
               page: 'aluminium-systems.html'
             }
           ]
@@ -444,51 +455,56 @@ window.JK_CHATBOT_CATALOG = {
           label: { en: 'Facades & Partitions', hi: 'फ़साड और पार्टीशन', pa: 'ਫ਼ਸਾਡ ਅਤੇ ਪਾਰਟੀਸ਼ਨ' },
           products: [
             {
-              id: 'al-curtain-walls',
-              label: { en: 'Curtain Walls & Structural Glazing', hi: 'कर्टन वॉल और स्ट्रक्चरल ग्लेज़िंग', pa: 'ਕਰਟਨ ਵਾਲ ਅਤੇ ਸਟ੍ਰਕਚਰਲ ਗਲੇਜ਼ਿੰਗ' },
+              id: 'al-facades',
+              label: { en: 'Aluminium Facades & Partitions', hi: 'एल्युमिनियम फ़साड और पार्टीशन', pa: 'ਐਲੂਮੀਨੀਅਮ ਫ਼ਸਾਡ ਅਤੇ ਪਾਰਟੀਸ਼ਨ' },
               summary: {
-                en: 'Stick and semi-unitised curtain walls, and two- or four-sided structural silicone glazing.',
-                hi: 'स्टिक और सेमी-यूनिटाइज़्ड कर्टन वॉल, और दो या चार तरफ़ा स्ट्रक्चरल सिलिकॉन ग्लेज़िंग।',
-                pa: 'ਸਟਿਕ ਅਤੇ ਸੈਮੀ-ਯੂਨਿਟਾਈਜ਼ਡ ਕਰਟਨ ਵਾਲ, ਅਤੇ ਦੋ ਜਾਂ ਚਾਰ ਪਾਸੀ ਸਟ੍ਰਕਚਰਲ ਸਿਲੀਕਾਨ ਗਲੇਜ਼ਿੰਗ।'
+                en: 'Curtain walls and structural glazing for building facades, shopfront systems and office glass partitions, with glass and aluminium from one source.',
+                hi: 'इमारत के फ़साड के लिए कर्टन वॉल और स्ट्रक्चरल ग्लेज़िंग, शॉपफ़्रंट सिस्टम और ऑफ़िस ग्लास पार्टीशन, ग्लास और एल्युमिनियम एक ही जगह से।',
+                pa: 'ਇਮਾਰਤ ਦੇ ਫ਼ਸਾਡ ਲਈ ਕਰਟਨ ਵਾਲ ਅਤੇ ਸਟ੍ਰਕਚਰਲ ਗਲੇਜ਼ਿੰਗ, ਸ਼ੌਪਫ਼੍ਰੰਟ ਸਿਸਟਮ ਅਤੇ ਦਫ਼ਤਰ ਗਲਾਸ ਪਾਰਟੀਸ਼ਨ, ਗਲਾਸ ਅਤੇ ਐਲੂਮੀਨੀਅਮ ਇੱਕੋ ਥਾਂ ਤੋਂ।'
               },
               points: [
-                { en: '50 mm / 60 mm mullions and transoms', hi: '50 mm / 60 mm म्युलियन और ट्रांसम', pa: '50 mm / 60 mm ਮਿਊਲੀਅਨ ਅਤੇ ਟ੍ਰਾਂਸਮ' },
-                { en: 'Glass and aluminium from one source', hi: 'ग्लास और एल्युमिनियम एक ही जगह से', pa: 'ਗਲਾਸ ਅਤੇ ਐਲੂਮੀਨੀਅਮ ਇੱਕੋ ਥਾਂ ਤੋਂ' }
+                { en: 'Stick and semi-unitised curtain walls with 50 mm / 60 mm mullions and transoms', hi: '50 mm / 60 mm म्युलियन और ट्रांसम वाली स्टिक और सेमी-यूनिटाइज़्ड कर्टन वॉल', pa: '50 mm / 60 mm ਮਿਊਲੀਅਨ ਅਤੇ ਟ੍ਰਾਂਸਮ ਵਾਲੀ ਸਟਿਕ ਅਤੇ ਸੈਮੀ-ਯੂਨਿਟਾਈਜ਼ਡ ਕਰਟਨ ਵਾਲ' },
+                { en: 'Two- or four-sided structural silicone glazing', hi: 'दो या चार तरफ़ा स्ट्रक्चरल सिलिकॉन ग्लेज़िंग', pa: 'ਦੋ ਜਾਂ ਚਾਰ ਪਾਸੀ ਸਟ੍ਰਕਚਰਲ ਸਿਲੀਕਾਨ ਗਲੇਜ਼ਿੰਗ' },
+                { en: 'Shopfront systems: 100 mm profile depth, DGU compatible', hi: 'शॉपफ़्रंट सिस्टम: 100 mm प्रोफ़ाइल डेप्थ, DGU के अनुकूल', pa: 'ਸ਼ੌਪਫ਼੍ਰੰਟ ਸਿਸਟਮ: 100 mm ਪ੍ਰੋਫ਼ਾਈਲ ਡੈਪਥ, DGU ਦੇ ਅਨੁਕੂਲ' },
+                { en: 'Office partitions, single or double glazed, with a micro-blinds option', hi: 'ऑफ़िस पार्टीशन, सिंगल या डबल ग्लेज़्ड, माइक्रो-ब्लाइंड्स विकल्प के साथ', pa: 'ਦਫ਼ਤਰ ਪਾਰਟੀਸ਼ਨ, ਸਿੰਗਲ ਜਾਂ ਡਬਲ ਗਲੇਜ਼ਡ, ਮਾਈਕ੍ਰੋ-ਬਲਾਈਂਡਜ਼ ਵਿਕਲਪ ਨਾਲ' }
               ],
-              uses: { en: 'Commercial buildings, malls, hotels and institutions.', hi: 'कमर्शियल इमारतें, मॉल, होटल और संस्थान।', pa: 'ਕਮਰਸ਼ੀਅਲ ਇਮਾਰਤਾਂ, ਮਾਲ, ਹੋਟਲ ਅਤੇ ਸੰਸਥਾਵਾਂ।' },
+              uses: { en: 'Commercial buildings, malls, hotels, institutions, shops, showrooms and offices.', hi: 'कमर्शियल इमारतें, मॉल, होटल, संस्थान, दुकानें, शोरूम और ऑफ़िस।', pa: 'ਕਮਰਸ਼ੀਅਲ ਇਮਾਰਤਾਂ, ਮਾਲ, ਹੋਟਲ, ਸੰਸਥਾਵਾਂ, ਦੁਕਾਨਾਂ, ਸ਼ੋਅਰੂਮ ਅਤੇ ਦਫ਼ਤਰ।' },
               specs: {
-                en: 'Stick and semi-unitised curtain walls with **50 mm / 60 mm** mullions and transoms; structural glazing with two-sided or four-sided structural silicone. Design and wind-load checks for your building are done by our technical team.',
-                hi: '**50 mm / 60 mm** म्युलियन और ट्रांसम के साथ स्टिक और सेमी-यूनिटाइज़्ड कर्टन वॉल; दो या चार तरफ़ा स्ट्रक्चरल सिलिकॉन ग्लेज़िंग। आपकी इमारत का डिज़ाइन और विंड-लोड चेक हमारी तकनीकी टीम करती है।',
-                pa: '**50 mm / 60 mm** ਮਿਊਲੀਅਨ ਅਤੇ ਟ੍ਰਾਂਸਮ ਨਾਲ ਸਟਿਕ ਅਤੇ ਸੈਮੀ-ਯੂਨਿਟਾਈਜ਼ਡ ਕਰਟਨ ਵਾਲ; ਦੋ ਜਾਂ ਚਾਰ ਪਾਸੀ ਸਟ੍ਰਕਚਰਲ ਸਿਲੀਕਾਨ ਗਲੇਜ਼ਿੰਗ। ਤੁਹਾਡੀ ਇਮਾਰਤ ਦਾ ਡਿਜ਼ਾਈਨ ਅਤੇ ਵਿੰਡ-ਲੋਡ ਚੈੱਕ ਸਾਡੀ ਤਕਨੀਕੀ ਟੀਮ ਕਰਦੀ ਹੈ।'
+                en: 'Stick and semi-unitised curtain walls with **50 mm / 60 mm** mullions and transoms; structural glazing with two-sided or four-sided structural silicone. Shopfront systems with a **100 mm** profile depth, DGU compatible. Design and wind-load checks for your building are done by our technical team.',
+                hi: '**50 mm / 60 mm** म्युलियन और ट्रांसम के साथ स्टिक और सेमी-यूनिटाइज़्ड कर्टन वॉल; दो या चार तरफ़ा स्ट्रक्चरल सिलिकॉन ग्लेज़िंग। **100 mm** प्रोफ़ाइल डेप्थ वाले शॉपफ़्रंट सिस्टम, DGU के अनुकूल। आपकी इमारत का डिज़ाइन और विंड-लोड चेक हमारी तकनीकी टीम करती है।',
+                pa: '**50 mm / 60 mm** ਮਿਊਲੀਅਨ ਅਤੇ ਟ੍ਰਾਂਸਮ ਨਾਲ ਸਟਿਕ ਅਤੇ ਸੈਮੀ-ਯੂਨਿਟਾਈਜ਼ਡ ਕਰਟਨ ਵਾਲ; ਦੋ ਜਾਂ ਚਾਰ ਪਾਸੀ ਸਟ੍ਰਕਚਰਲ ਸਿਲੀਕਾਨ ਗਲੇਜ਼ਿੰਗ। **100 mm** ਪ੍ਰੋਫ਼ਾਈਲ ਡੈਪਥ ਵਾਲੇ ਸ਼ੌਪਫ਼੍ਰੰਟ ਸਿਸਟਮ, DGU ਦੇ ਅਨੁਕੂਲ। ਤੁਹਾਡੀ ਇਮਾਰਤ ਦਾ ਡਿਜ਼ਾਈਨ ਅਤੇ ਵਿੰਡ-ਲੋਡ ਚੈੱਕ ਸਾਡੀ ਤਕਨੀਕੀ ਟੀਮ ਕਰਦੀ ਹੈ।'
               },
+              styles: [
+                {
+                  label: { en: 'Curtain walls & structural glazing', hi: 'कर्टन वॉल और स्ट्रक्चरल ग्लेज़िंग', pa: 'ਕਰਟਨ ਵਾਲ ਅਤੇ ਸਟ੍ਰਕਚਰਲ ਗਲੇਜ਼ਿੰਗ' },
+                  text: {
+                    en: 'Glass building facades: stick and semi-unitised curtain walls, and two- or four-sided structural silicone glazing.',
+                    hi: 'इमारत के ग्लास फ़साड: स्टिक और सेमी-यूनिटाइज़्ड कर्टन वॉल, और दो या चार तरफ़ा स्ट्रक्चरल सिलिकॉन ग्लेज़िंग।',
+                    pa: 'ਇਮਾਰਤ ਦੇ ਗਲਾਸ ਫ਼ਸਾਡ: ਸਟਿਕ ਅਤੇ ਸੈਮੀ-ਯੂਨਿਟਾਈਜ਼ਡ ਕਰਟਨ ਵਾਲ, ਅਤੇ ਦੋ ਜਾਂ ਚਾਰ ਪਾਸੀ ਸਟ੍ਰਕਚਰਲ ਸਿਲੀਕਾਨ ਗਲੇਜ਼ਿੰਗ।'
+                  }
+                },
+                {
+                  label: { en: 'Shopfronts', hi: 'शॉपफ़्रंट', pa: 'ਸ਼ੌਪਫ਼੍ਰੰਟ' },
+                  text: {
+                    en: 'Commercial shopfront systems with a 100 mm profile depth, compatible with DGU, for shops, showrooms and commercial frontages.',
+                    hi: '100 mm प्रोफ़ाइल डेप्थ वाले कमर्शियल शॉपफ़्रंट सिस्टम, DGU के अनुकूल, दुकानों, शोरूम और कमर्शियल फ़्रंट के लिए।',
+                    pa: '100 mm ਪ੍ਰੋਫ਼ਾਈਲ ਡੈਪਥ ਵਾਲੇ ਕਮਰਸ਼ੀਅਲ ਸ਼ੌਪਫ਼੍ਰੰਟ ਸਿਸਟਮ, DGU ਦੇ ਅਨੁਕੂਲ, ਦੁਕਾਨਾਂ, ਸ਼ੋਅਰੂਮ ਅਤੇ ਕਮਰਸ਼ੀਅਲ ਫ਼੍ਰੰਟ ਲਈ।'
+                  }
+                },
+                {
+                  label: { en: 'Office glass partitions', hi: 'ऑफ़िस ग्लास पार्टीशन', pa: 'ਦਫ਼ਤਰ ਗਲਾਸ ਪਾਰਟੀਸ਼ਨ' },
+                  text: {
+                    en: 'Single or double glazed office partitions, with a micro-blinds option, for offices, cabins, meeting rooms and dividers.',
+                    hi: 'सिंगल या डबल ग्लेज़्ड ऑफ़िस पार्टीशन, माइक्रो-ब्लाइंड्स विकल्प के साथ, ऑफ़िस, केबिन, मीटिंग रूम और डिवाइडर के लिए।',
+                    pa: 'ਸਿੰਗਲ ਜਾਂ ਡਬਲ ਗਲੇਜ਼ਡ ਦਫ਼ਤਰ ਪਾਰਟੀਸ਼ਨ, ਮਾਈਕ੍ਰੋ-ਬਲਾਈਂਡਜ਼ ਵਿਕਲਪ ਨਾਲ, ਦਫ਼ਤਰ, ਕੈਬਿਨ, ਮੀਟਿੰਗ ਰੂਮ ਅਤੇ ਡਿਵਾਈਡਰ ਲਈ।'
+                  }
+                }
+              ],
+              keywords: ['curtain wall', 'structural glazing', 'facade', 'façade', 'shopfront', 'shop front', 'partition', 'cabin', 'फ़साड', 'पार्टीशन', 'ਫ਼ਸਾਡ', 'ਪਾਰਟੀਸ਼ਨ'],
               page: 'aluminium-systems.html',
               hints: {
-                quantity: { en: 'e.g. approx. 3,000 sq ft of facade', hi: 'जैसे लगभग 3,000 वर्ग फुट फ़साड', pa: 'ਜਿਵੇਂ ਲਗਭਗ 3,000 ਵਰਗ ਫੁੱਟ ਫ਼ਸਾਡ' }
+                quantity: { en: 'e.g. approx. 3,000 sq ft of facade, or 6 office cabins', hi: 'जैसे लगभग 3,000 वर्ग फुट फ़साड, या 6 ऑफ़िस केबिन', pa: 'ਜਿਵੇਂ ਲਗਭਗ 3,000 ਵਰਗ ਫੁੱਟ ਫ਼ਸਾਡ, ਜਾਂ 6 ਦਫ਼ਤਰ ਕੈਬਿਨ' }
               }
-            },
-            {
-              id: 'al-shopfronts',
-              label: { en: 'Shopfront Systems', hi: 'शॉपफ़्रंट सिस्टम', pa: 'ਸ਼ੌਪਫ਼੍ਰੰਟ ਸਿਸਟਮ' },
-              summary: {
-                en: 'Commercial shopfront systems with a 100 mm profile depth, compatible with DGU.',
-                hi: '100 mm प्रोफ़ाइल डेप्थ वाले कमर्शियल शॉपफ़्रंट सिस्टम, DGU के अनुकूल।',
-                pa: '100 mm ਪ੍ਰੋਫ਼ਾਈਲ ਡੈਪਥ ਵਾਲੇ ਕਮਰਸ਼ੀਅਲ ਸ਼ੌਪਫ਼੍ਰੰਟ ਸਿਸਟਮ, DGU ਦੇ ਅਨੁਕੂਲ।'
-              },
-              points: [{ en: '100 mm profile depth, DGU compatible', hi: '100 mm प्रोफ़ाइल डेप्थ, DGU के अनुकूल', pa: '100 mm ਪ੍ਰੋਫ਼ਾਈਲ ਡੈਪਥ, DGU ਦੇ ਅਨੁਕੂਲ' }],
-              uses: { en: 'Shops, showrooms and commercial frontages.', hi: 'दुकानें, शोरूम और कमर्शियल फ़्रंट।', pa: 'ਦੁਕਾਨਾਂ, ਸ਼ੋਅਰੂਮ ਅਤੇ ਕਮਰਸ਼ੀਅਲ ਫ਼੍ਰੰਟ।' },
-              page: 'aluminium-systems.html'
-            },
-            {
-              id: 'al-partitions',
-              label: { en: 'Office Glass Partitions', hi: 'ऑफ़िस ग्लास पार्टीशन', pa: 'ਦਫ਼ਤਰ ਗਲਾਸ ਪਾਰਟੀਸ਼ਨ' },
-              summary: {
-                en: 'Single or double glazed office partitions, with a micro-blinds option.',
-                hi: 'सिंगल या डबल ग्लेज़्ड ऑफ़िस पार्टीशन, माइक्रो-ब्लाइंड्स विकल्प के साथ।',
-                pa: 'ਸਿੰਗਲ ਜਾਂ ਡਬਲ ਗਲੇਜ਼ਡ ਦਫ਼ਤਰ ਪਾਰਟੀਸ਼ਨ, ਮਾਈਕ੍ਰੋ-ਬਲਾਈਂਡਜ਼ ਵਿਕਲਪ ਨਾਲ।'
-              },
-              points: [{ en: 'Single or double glazed; micro-blinds option', hi: 'सिंगल या डबल ग्लेज़्ड; माइक्रो-ब्लाइंड्स विकल्प', pa: 'ਸਿੰਗਲ ਜਾਂ ਡਬਲ ਗਲੇਜ਼ਡ; ਮਾਈਕ੍ਰੋ-ਬਲਾਈਂਡਜ਼ ਵਿਕਲਪ' }],
-              uses: { en: 'Offices, cabins, meeting rooms and dividers.', hi: 'ऑफ़िस, केबिन, मीटिंग रूम और डिवाइडर।', pa: 'ਦਫ਼ਤਰ, ਕੈਬਿਨ, ਮੀਟਿੰਗ ਰੂਮ ਅਤੇ ਡਿਵਾਈਡਰ।' },
-              page: 'aluminium-systems.html'
             }
           ]
         }
@@ -516,61 +532,59 @@ window.JK_CHATBOT_CATALOG = {
         quantity: { en: 'e.g. 10 windows and 1 balcony door', hi: 'जैसे 10 खिड़कियाँ और 1 बालकनी दरवाज़ा', pa: 'ਜਿਵੇਂ 10 ਖਿੜਕੀਆਂ ਅਤੇ 1 ਬਾਲਕਨੀ ਦਰਵਾਜ਼ਾ' },
         specifications: { en: 'e.g. 4 ft × 4 ft, white, with mesh', hi: 'जैसे 4 फुट × 4 फुट, सफ़ेद, मेश के साथ', pa: 'ਜਿਵੇਂ 4 ਫੁੱਟ × 4 ਫੁੱਟ, ਚਿੱਟਾ, ਮੈਸ਼ ਨਾਲ' }
       },
+      // One product per group, as for aluminium: styles are information, not a choice.
       subcategories: [
         {
           id: 'upvc-windows',
           label: { en: 'Windows', hi: 'खिड़कियाँ', pa: 'ਖਿੜਕੀਆਂ' },
           products: [
             {
-              id: 'upvc-sliding-windows',
-              label: { en: 'Multi-Chamber Sliding Windows', hi: 'मल्टी-चैंबर स्लाइडिंग खिड़कियाँ', pa: 'ਮਲਟੀ-ਚੈਂਬਰ ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ' },
+              id: 'upvc-windows',
+              label: { en: 'uPVC Windows', hi: 'uPVC खिड़कियाँ', pa: 'uPVC ਖਿੜਕੀਆਂ' },
               summary: {
-                en: '2-track and 3-track uPVC sliding windows, with an option for SS 304 mosquito mesh.',
-                hi: '2 ट्रैक और 3 ट्रैक uPVC स्लाइडिंग खिड़कियाँ, SS 304 मच्छरदानी के विकल्प के साथ।',
-                pa: '2 ਟ੍ਰੈਕ ਅਤੇ 3 ਟ੍ਰੈਕ uPVC ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ, SS 304 ਮੱਛਰਦਾਨੀ ਦੇ ਵਿਕਲਪ ਨਾਲ।'
+                en: 'JK WINDOORS uPVC windows in sliding, openable, fixed, combination and bay styles. Not sure which type you need? Share your requirement or a photo, and our team will suggest the right one.',
+                hi: 'स्लाइडिंग, खुलने वाली, फ़िक्स्ड, कॉम्बिनेशन और बे डिज़ाइन में JK WINDOORS uPVC खिड़कियाँ। पता नहीं कौन-सी चाहिए? अपनी ज़रूरत या फ़ोटो भेजें, हमारी टीम सही खिड़की सुझाएगी।',
+                pa: 'ਸਲਾਈਡਿੰਗ, ਖੁੱਲ੍ਹਣ ਵਾਲੀਆਂ, ਫ਼ਿਕਸਡ, ਕੰਬੀਨੇਸ਼ਨ ਅਤੇ ਬੇ ਡਿਜ਼ਾਈਨ ਵਿੱਚ JK WINDOORS uPVC ਖਿੜਕੀਆਂ। ਪਤਾ ਨਹੀਂ ਕਿਹੜੀ ਚਾਹੀਦੀ ਹੈ? ਆਪਣੀ ਲੋੜ ਜਾਂ ਫ਼ੋਟੋ ਭੇਜੋ, ਸਾਡੀ ਟੀਮ ਸਹੀ ਖਿੜਕੀ ਸੁਝਾਏਗੀ।'
               },
               points: [
-                { en: '2-track: 60 mm frame depth', hi: '2 ट्रैक: 60 mm फ़्रेम डेप्थ', pa: '2 ਟ੍ਰੈਕ: 60 mm ਫ਼ਰੇਮ ਡੈਪਥ' },
-                { en: '3-track: 88 mm frame depth with a mesh track', hi: '3 ट्रैक: मेश ट्रैक के साथ 88 mm फ़्रेम डेप्थ', pa: '3 ਟ੍ਰੈਕ: ਮੈਸ਼ ਟ੍ਰੈਕ ਨਾਲ 88 mm ਫ਼ਰੇਮ ਡੈਪਥ' }
+                { en: 'Sliding windows in 2 or 3 tracks, with an option for SS 304 mosquito mesh', hi: '2 या 3 ट्रैक स्लाइडिंग खिड़कियाँ, SS 304 मच्छरदानी के विकल्प के साथ', pa: '2 ਜਾਂ 3 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ, SS 304 ਮੱਛਰਦਾਨੀ ਦੇ ਵਿਕਲਪ ਨਾਲ' },
+                { en: 'Casement and tilt-and-turn windows with German-spec hardware', hi: 'जर्मन-स्पेक हार्डवेयर वाली केसमेंट और टिल्ट-एंड-टर्न खिड़कियाँ', pa: 'ਜਰਮਨ-ਸਪੈੱਕ ਹਾਰਡਵੇਅਰ ਵਾਲੀਆਂ ਕੇਸਮੈਂਟ ਅਤੇ ਟਿਲਟ-ਐਂਡ-ਟਰਨ ਖਿੜਕੀਆਂ' },
+                { en: 'EPDM / TPE compression gaskets for a tight seal', hi: 'कसकर सील के लिए EPDM / TPE कम्प्रेशन गैस्केट', pa: 'ਕਸਵੀਂ ਸੀਲ ਲਈ EPDM / TPE ਕੰਪ੍ਰੈਸ਼ਨ ਗੈਸਕੇਟ' },
+                { en: 'Fixed windows take single glass or DGU up to 24 mm', hi: 'फ़िक्स्ड खिड़कियों में सिंगल ग्लास या 24 mm तक DGU', pa: 'ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ ਵਿੱਚ ਸਿੰਗਲ ਗਲਾਸ ਜਾਂ 24 mm ਤੱਕ DGU' }
               ],
-              uses: { en: 'Bedrooms, living rooms and kitchens.', hi: 'बेडरूम, लिविंग रूम और रसोई।', pa: 'ਬੈੱਡਰੂਮ, ਲਿਵਿੰਗ ਰੂਮ ਅਤੇ ਰਸੋਈ।' },
+              uses: { en: 'Bedrooms, living rooms and kitchens, and homes that need quiet rooms.', hi: 'बेडरूम, लिविंग रूम और रसोई, और ऐसे घर जिन्हें शांत कमरे चाहिए।', pa: 'ਬੈੱਡਰੂਮ, ਲਿਵਿੰਗ ਰੂਮ ਅਤੇ ਰਸੋਈ, ਅਤੇ ਅਜਿਹੇ ਘਰ ਜਿਨ੍ਹਾਂ ਨੂੰ ਸ਼ਾਂਤ ਕਮਰੇ ਚਾਹੀਦੇ ਹਨ।' },
               specs: {
-                en: '2-track sliding: **60 mm** frame depth. 3-track sliding: **88 mm** frame depth with a mesh track. Mosquito mesh in SS 304 (2.5 / 3 track).',
-                hi: '2 ट्रैक स्लाइडिंग: **60 mm** फ़्रेम डेप्थ। 3 ट्रैक स्लाइडिंग: मेश ट्रैक के साथ **88 mm** फ़्रेम डेप्थ। SS 304 मच्छरदानी (2.5 / 3 ट्रैक)।',
-                pa: '2 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ: **60 mm** ਫ਼ਰੇਮ ਡੈਪਥ। 3 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ: ਮੈਸ਼ ਟ੍ਰੈਕ ਨਾਲ **88 mm** ਫ਼ਰੇਮ ਡੈਪਥ। SS 304 ਮੱਛਰਦਾਨੀ (2.5 / 3 ਟ੍ਰੈਕ)।'
+                en: '2-track sliding: **60 mm** frame depth. 3-track sliding: **88 mm** frame depth with a mesh track. Tilt-and-turn in 60 / 70 mm systems. Fixed windows take single glass or DGU up to **24 mm**; bay windows at 90° or 135°.',
+                hi: '2 ट्रैक स्लाइडिंग: **60 mm** फ़्रेम डेप्थ। 3 ट्रैक स्लाइडिंग: मेश ट्रैक के साथ **88 mm** फ़्रेम डेप्थ। 60 / 70 mm सिस्टम में टिल्ट-एंड-टर्न। फ़िक्स्ड खिड़कियों में सिंगल ग्लास या **24 mm** तक DGU; बे खिड़कियाँ 90° या 135° पर।',
+                pa: '2 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ: **60 mm** ਫ਼ਰੇਮ ਡੈਪਥ। 3 ਟ੍ਰੈਕ ਸਲਾਈਡਿੰਗ: ਮੈਸ਼ ਟ੍ਰੈਕ ਨਾਲ **88 mm** ਫ਼ਰੇਮ ਡੈਪਥ। 60 / 70 mm ਸਿਸਟਮ ਵਿੱਚ ਟਿਲਟ-ਐਂਡ-ਟਰਨ। ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ ਵਿੱਚ ਸਿੰਗਲ ਗਲਾਸ ਜਾਂ **24 mm** ਤੱਕ DGU; ਬੇ ਖਿੜਕੀਆਂ 90° ਜਾਂ 135° ’ਤੇ।'
               },
-              page: 'upvc-systems.html'
-            },
-            {
-              id: 'upvc-casement-windows',
-              label: { en: 'Casement & Tilt-Turn Windows', hi: 'केसमेंट और टिल्ट-टर्न खिड़कियाँ', pa: 'ਕੇਸਮੈਂਟ ਅਤੇ ਟਿਲਟ-ਟਰਨ ਖਿੜਕੀਆਂ' },
-              summary: {
-                en: 'Single and double casement, top-hung and tilt-and-turn uPVC windows with German-spec hardware.',
-                hi: 'सिंगल और डबल केसमेंट, टॉप-हंग और जर्मन-स्पेक हार्डवेयर वाली टिल्ट-एंड-टर्न uPVC खिड़कियाँ।',
-                pa: 'ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਕੇਸਮੈਂਟ, ਟੌਪ-ਹੰਗ ਅਤੇ ਜਰਮਨ-ਸਪੈੱਕ ਹਾਰਡਵੇਅਰ ਵਾਲੀਆਂ ਟਿਲਟ-ਐਂਡ-ਟਰਨ uPVC ਖਿੜਕੀਆਂ।'
-              },
-              points: [
-                { en: 'Tilt-and-turn in 60 / 70 mm systems', hi: '60 / 70 mm सिस्टम में टिल्ट-एंड-टर्न', pa: '60 / 70 mm ਸਿਸਟਮ ਵਿੱਚ ਟਿਲਟ-ਐਂਡ-ਟਰਨ' },
-                { en: 'EPDM / TPE compression gaskets for a tight seal', hi: 'कसकर सील के लिए EPDM / TPE कम्प्रेशन गैस्केट', pa: 'ਕਸਵੀਂ ਸੀਲ ਲਈ EPDM / TPE ਕੰਪ੍ਰੈਸ਼ਨ ਗੈਸਕੇਟ' }
+              styles: [
+                {
+                  label: { en: 'Sliding', hi: 'स्लाइडिंग', pa: 'ਸਲਾਈਡਿੰਗ' },
+                  text: {
+                    en: '2-track and 3-track uPVC sliding windows, with an option for SS 304 mosquito mesh.',
+                    hi: '2 ट्रैक और 3 ट्रैक uPVC स्लाइडिंग खिड़कियाँ, SS 304 मच्छरदानी के विकल्प के साथ।',
+                    pa: '2 ਟ੍ਰੈਕ ਅਤੇ 3 ਟ੍ਰੈਕ uPVC ਸਲਾਈਡਿੰਗ ਖਿੜਕੀਆਂ, SS 304 ਮੱਛਰਦਾਨੀ ਦੇ ਵਿਕਲਪ ਨਾਲ।'
+                  }
+                },
+                {
+                  label: { en: 'Openable (casement & tilt-turn)', hi: 'खुलने वाली (केसमेंट और टिल्ट-टर्न)', pa: 'ਖੁੱਲ੍ਹਣ ਵਾਲੀਆਂ (ਕੇਸਮੈਂਟ ਅਤੇ ਟਿਲਟ-ਟਰਨ)' },
+                  text: {
+                    en: 'Single and double casement, top-hung and tilt-and-turn windows with German-spec hardware, for full opening, ventilation and quiet rooms.',
+                    hi: 'जर्मन-स्पेक हार्डवेयर वाली सिंगल और डबल केसमेंट, टॉप-हंग और टिल्ट-एंड-टर्न खिड़कियाँ, पूरे खुलाव, हवा और शांत कमरों के लिए।',
+                    pa: 'ਜਰਮਨ-ਸਪੈੱਕ ਹਾਰਡਵੇਅਰ ਵਾਲੀਆਂ ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਕੇਸਮੈਂਟ, ਟੌਪ-ਹੰਗ ਅਤੇ ਟਿਲਟ-ਐਂਡ-ਟਰਨ ਖਿੜਕੀਆਂ, ਪੂਰੀ ਖੁੱਲ੍ਹ, ਹਵਾ ਅਤੇ ਸ਼ਾਂਤ ਕਮਰਿਆਂ ਲਈ।'
+                  }
+                },
+                {
+                  label: { en: 'Fixed, combination & bay', hi: 'फ़िक्स्ड, कॉम्बिनेशन और बे', pa: 'ਫ਼ਿਕਸਡ, ਕੰਬੀਨੇਸ਼ਨ ਅਤੇ ਬੇ' },
+                  text: {
+                    en: 'Fixed windows, combination windows (fixed plus casement or slider), bay windows (90° / 135°) and ventilators, for picture windows, corners and mixed openings.',
+                    hi: 'फ़िक्स्ड खिड़कियाँ, कॉम्बिनेशन खिड़कियाँ (फ़िक्स्ड के साथ केसमेंट या स्लाइडर), बे खिड़कियाँ (90° / 135°) और वेंटिलेटर, पिक्चर विंडो, कोनों और मिले-जुले खुलाव के लिए।',
+                    pa: 'ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ, ਕੰਬੀਨੇਸ਼ਨ ਖਿੜਕੀਆਂ (ਫ਼ਿਕਸਡ ਨਾਲ ਕੇਸਮੈਂਟ ਜਾਂ ਸਲਾਈਡਰ), ਬੇ ਖਿੜਕੀਆਂ (90° / 135°) ਅਤੇ ਵੈਂਟੀਲੇਟਰ, ਪਿਕਚਰ ਵਿੰਡੋ, ਕੋਨਿਆਂ ਅਤੇ ਮਿਲੀਆਂ-ਜੁਲੀਆਂ ਖੁੱਲ੍ਹਾਂ ਲਈ।'
+                  }
+                }
               ],
-              uses: { en: 'Homes needing full opening, ventilation and quiet rooms.', hi: 'जिन घरों में पूरा खुलाव, हवा और शांत कमरे चाहिए।', pa: 'ਜਿਨ੍ਹਾਂ ਘਰਾਂ ਵਿੱਚ ਪੂਰੀ ਖੁੱਲ੍ਹ, ਹਵਾ ਅਤੇ ਸ਼ਾਂਤ ਕਮਰੇ ਚਾਹੀਦੇ ਹਨ।' },
-              page: 'upvc-systems.html'
-            },
-            {
-              id: 'upvc-fixed-windows',
-              label: { en: 'Fixed, Combination & Bay Windows', hi: 'फ़िक्स्ड, कॉम्बिनेशन और बे खिड़कियाँ', pa: 'ਫ਼ਿਕਸਡ, ਕੰਬੀਨੇਸ਼ਨ ਅਤੇ ਬੇ ਖਿੜਕੀਆਂ' },
-              summary: {
-                en: 'Fixed windows, combination windows (fixed plus casement or slider), bay windows (90° / 135°) and ventilators.',
-                hi: 'फ़िक्स्ड खिड़कियाँ, कॉम्बिनेशन खिड़कियाँ (फ़िक्स्ड के साथ केसमेंट या स्लाइडर), बे खिड़कियाँ (90° / 135°) और वेंटिलेटर।',
-                pa: 'ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ, ਕੰਬੀਨੇਸ਼ਨ ਖਿੜਕੀਆਂ (ਫ਼ਿਕਸਡ ਨਾਲ ਕੇਸਮੈਂਟ ਜਾਂ ਸਲਾਈਡਰ), ਬੇ ਖਿੜਕੀਆਂ (90° / 135°) ਅਤੇ ਵੈਂਟੀਲੇਟਰ।'
-              },
-              points: [{ en: 'Fixed windows take single glass or DGU up to 24 mm', hi: 'फ़िक्स्ड खिड़कियों में सिंगल ग्लास या 24 mm तक DGU', pa: 'ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ ਵਿੱਚ ਸਿੰਗਲ ਗਲਾਸ ਜਾਂ 24 mm ਤੱਕ DGU' }],
-              uses: { en: 'Picture windows, corners and mixed openings.', hi: 'पिक्चर विंडो, कोने और मिले-जुले खुलाव।', pa: 'ਪਿਕਚਰ ਵਿੰਡੋ, ਕੋਨੇ ਅਤੇ ਮਿਲੀਆਂ-ਜੁਲੀਆਂ ਖੁੱਲ੍ਹਾਂ।' },
-              specs: {
-                en: 'Fixed windows take single glass or DGU up to **24 mm**. Bay windows at 90° or 135°.',
-                hi: 'फ़िक्स्ड खिड़कियों में सिंगल ग्लास या **24 mm** तक DGU। बे खिड़कियाँ 90° या 135° पर।',
-                pa: 'ਫ਼ਿਕਸਡ ਖਿੜਕੀਆਂ ਵਿੱਚ ਸਿੰਗਲ ਗਲਾਸ ਜਾਂ **24 mm** ਤੱਕ DGU। ਬੇ ਖਿੜਕੀਆਂ 90° ਜਾਂ 135° ’ਤੇ।'
-              },
+              keywords: ['window', 'sliding window', 'casement', 'tilt turn', 'bay window', 'fixed window', 'combination window', 'ventilator', 'खिड़क', 'ਖਿੜਕ'],
               page: 'upvc-systems.html'
             }
           ]
@@ -580,30 +594,39 @@ window.JK_CHATBOT_CATALOG = {
           label: { en: 'Doors', hi: 'दरवाज़े', pa: 'ਦਰਵਾਜ਼ੇ' },
           products: [
             {
-              id: 'upvc-sliding-doors',
-              label: { en: 'Sliding & Lift-and-Slide Doors', hi: 'स्लाइडिंग और लिफ़्ट-एंड-स्लाइड दरवाज़े', pa: 'ਸਲਾਈਡਿੰਗ ਅਤੇ ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ' },
+              id: 'upvc-doors',
+              label: { en: 'uPVC Doors', hi: 'uPVC दरवाज़े', pa: 'uPVC ਦਰਵਾਜ਼ੇ' },
               summary: {
-                en: 'Sliding doors with 2, 3 or 4 panels and a keyed multi-point hook lock, lift-and-slide doors and sliding doors with mosquito mesh.',
-                hi: '2, 3 या 4 पैनल और चाबी वाले मल्टी-पॉइंट हुक लॉक के साथ स्लाइडिंग दरवाज़े, लिफ़्ट-एंड-स्लाइड दरवाज़े और मच्छरदानी वाले स्लाइडिंग दरवाज़े।',
-                pa: '2, 3 ਜਾਂ 4 ਪੈਨਲ ਅਤੇ ਚਾਬੀ ਵਾਲੇ ਮਲਟੀ-ਪੁਆਇੰਟ ਹੁੱਕ ਲੌਕ ਨਾਲ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ ਅਤੇ ਮੱਛਰਦਾਨੀ ਵਾਲੇ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ।'
-              },
-              points: [{ en: 'Keyed multi-point hook lock', hi: 'चाबी वाला मल्टी-पॉइंट हुक लॉक', pa: 'ਚਾਬੀ ਵਾਲਾ ਮਲਟੀ-ਪੁਆਇੰਟ ਹੁੱਕ ਲੌਕ' }],
-              uses: { en: 'Balconies, terraces and patios.', hi: 'बालकनी, छत और पैटियो।', pa: 'ਬਾਲਕਨੀ, ਛੱਤ ਅਤੇ ਪੈਟੀਓ।' },
-              page: 'upvc-systems.html'
-            },
-            {
-              id: 'upvc-casement-doors',
-              label: { en: 'Casement, French & Entrance Doors', hi: 'केसमेंट, फ़्रेंच और एंट्रेंस दरवाज़े', pa: 'ਕੇਸਮੈਂਟ, ਫ਼੍ਰੈਂਚ ਅਤੇ ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ' },
-              summary: {
-                en: 'Casement doors with 3D-adjustable hinges, single and double openable doors, French and balcony doors, and entrance doors with a reinforced steel core.',
-                hi: '3D-एडजस्टेबल हिंज वाले केसमेंट दरवाज़े, सिंगल और डबल खुलने वाले दरवाज़े, फ़्रेंच और बालकनी दरवाज़े, और रीइन्फ़ोर्स्ड स्टील कोर वाले एंट्रेंस दरवाज़े।',
-                pa: '3D-ਐਡਜਸਟੇਬਲ ਹਿੰਜ ਵਾਲੇ ਕੇਸਮੈਂਟ ਦਰਵਾਜ਼ੇ, ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਖੁੱਲ੍ਹਣ ਵਾਲੇ ਦਰਵਾਜ਼ੇ, ਫ਼੍ਰੈਂਚ ਅਤੇ ਬਾਲਕਨੀ ਦਰਵਾਜ਼ੇ, ਅਤੇ ਰੀਇਨਫ਼ੋਰਸਡ ਸਟੀਲ ਕੋਰ ਵਾਲੇ ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ।'
+                en: 'JK WINDOORS uPVC doors: sliding, lift-and-slide, openable, French, balcony and entrance doors. Not sure which type suits your opening? Share your requirement or a photo, and our team will suggest the right one.',
+                hi: 'JK WINDOORS uPVC दरवाज़े: स्लाइडिंग, लिफ़्ट-एंड-स्लाइड, खुलने वाले, फ़्रेंच, बालकनी और एंट्रेंस दरवाज़े। पता नहीं आपके खुलाव के लिए कौन-सा सही है? अपनी ज़रूरत या फ़ोटो भेजें, हमारी टीम सही दरवाज़ा सुझाएगी।',
+                pa: 'JK WINDOORS uPVC ਦਰਵਾਜ਼ੇ: ਸਲਾਈਡਿੰਗ, ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ, ਖੁੱਲ੍ਹਣ ਵਾਲੇ, ਫ਼੍ਰੈਂਚ, ਬਾਲਕਨੀ ਅਤੇ ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ। ਪਤਾ ਨਹੀਂ ਤੁਹਾਡੀ ਖੁੱਲ੍ਹ ਲਈ ਕਿਹੜਾ ਸਹੀ ਹੈ? ਆਪਣੀ ਲੋੜ ਜਾਂ ਫ਼ੋਟੋ ਭੇਜੋ, ਸਾਡੀ ਟੀਮ ਸਹੀ ਦਰਵਾਜ਼ਾ ਸੁਝਾਏਗੀ।'
               },
               points: [
-                { en: 'Entrance doors: laminated glass inserts and euro-cylinder locks', hi: 'एंट्रेंस दरवाज़े: लैमिनेटेड ग्लास इन्सर्ट और यूरो-सिलिंडर लॉक', pa: 'ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ: ਲੈਮੀਨੇਟਿਡ ਗਲਾਸ ਇਨਸਰਟ ਅਤੇ ਯੂਰੋ-ਸਿਲੰਡਰ ਲੌਕ' },
+                { en: 'Sliding doors with 2, 3 or 4 panels and a keyed multi-point hook lock', hi: '2, 3 या 4 पैनल और चाबी वाले मल्टी-पॉइंट हुक लॉक वाले स्लाइडिंग दरवाज़े', pa: '2, 3 ਜਾਂ 4 ਪੈਨਲ ਅਤੇ ਚਾਬੀ ਵਾਲੇ ਮਲਟੀ-ਪੁਆਇੰਟ ਹੁੱਕ ਲੌਕ ਵਾਲੇ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ' },
+                { en: 'Casement doors with 3D-adjustable hinges', hi: '3D-एडजस्टेबल हिंज वाले केसमेंट दरवाज़े', pa: '3D-ਐਡਜਸਟੇਬਲ ਹਿੰਜ ਵਾਲੇ ਕੇਸਮੈਂਟ ਦਰਵਾਜ਼ੇ' },
+                { en: 'Entrance doors: reinforced steel core, laminated glass inserts and euro-cylinder locks', hi: 'एंट्रेंस दरवाज़े: रीइन्फ़ोर्स्ड स्टील कोर, लैमिनेटेड ग्लास इन्सर्ट और यूरो-सिलिंडर लॉक', pa: 'ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ: ਰੀਇਨਫ਼ੋਰਸਡ ਸਟੀਲ ਕੋਰ, ਲੈਮੀਨੇਟਿਡ ਗਲਾਸ ਇਨਸਰਟ ਅਤੇ ਯੂਰੋ-ਸਿਲੰਡਰ ਲੌਕ' },
                 { en: 'French doors with a low-threshold option', hi: 'लो-थ्रेशोल्ड विकल्प वाले फ़्रेंच दरवाज़े', pa: 'ਲੋ-ਥ੍ਰੈਸ਼ਹੋਲਡ ਵਿਕਲਪ ਵਾਲੇ ਫ਼੍ਰੈਂਚ ਦਰਵਾਜ਼ੇ' }
               ],
-              uses: { en: 'Main entrances, balconies and garden doors.', hi: 'मुख्य प्रवेश, बालकनी और बगीचे के दरवाज़े।', pa: 'ਮੁੱਖ ਦਾਖ਼ਲਾ, ਬਾਲਕਨੀ ਅਤੇ ਬਗੀਚੇ ਦੇ ਦਰਵਾਜ਼ੇ।' },
+              uses: { en: 'Main entrances, balconies, terraces, patios and garden doors.', hi: 'मुख्य प्रवेश, बालकनी, छत, पैटियो और बगीचे के दरवाज़े।', pa: 'ਮੁੱਖ ਦਾਖ਼ਲਾ, ਬਾਲਕਨੀ, ਛੱਤ, ਪੈਟੀਓ ਅਤੇ ਬਗੀਚੇ ਦੇ ਦਰਵਾਜ਼ੇ।' },
+              styles: [
+                {
+                  label: { en: 'Sliding & lift-and-slide', hi: 'स्लाइडिंग और लिफ़्ट-एंड-स्लाइड', pa: 'ਸਲਾਈਡਿੰਗ ਅਤੇ ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ' },
+                  text: {
+                    en: 'Sliding doors with 2, 3 or 4 panels and a keyed multi-point hook lock, lift-and-slide doors and sliding doors with mosquito mesh, for balconies, terraces and patios.',
+                    hi: '2, 3 या 4 पैनल और चाबी वाले मल्टी-पॉइंट हुक लॉक के साथ स्लाइडिंग दरवाज़े, लिफ़्ट-एंड-स्लाइड दरवाज़े और मच्छरदानी वाले स्लाइडिंग दरवाज़े, बालकनी, छत और पैटियो के लिए।',
+                    pa: '2, 3 ਜਾਂ 4 ਪੈਨਲ ਅਤੇ ਚਾਬੀ ਵਾਲੇ ਮਲਟੀ-ਪੁਆਇੰਟ ਹੁੱਕ ਲੌਕ ਨਾਲ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਲਿਫ਼ਟ-ਐਂਡ-ਸਲਾਈਡ ਦਰਵਾਜ਼ੇ ਅਤੇ ਮੱਛਰਦਾਨੀ ਵਾਲੇ ਸਲਾਈਡਿੰਗ ਦਰਵਾਜ਼ੇ, ਬਾਲਕਨੀ, ਛੱਤ ਅਤੇ ਪੈਟੀਓ ਲਈ।'
+                  }
+                },
+                {
+                  label: { en: 'Openable, French & entrance', hi: 'खुलने वाले, फ़्रेंच और एंट्रेंस', pa: 'ਖੁੱਲ੍ਹਣ ਵਾਲੇ, ਫ਼੍ਰੈਂਚ ਅਤੇ ਐਂਟਰੈਂਸ' },
+                  text: {
+                    en: 'Casement doors with 3D-adjustable hinges, single and double openable doors, French and balcony doors, and entrance doors with a reinforced steel core.',
+                    hi: '3D-एडजस्टेबल हिंज वाले केसमेंट दरवाज़े, सिंगल और डबल खुलने वाले दरवाज़े, फ़्रेंच और बालकनी दरवाज़े, और रीइन्फ़ोर्स्ड स्टील कोर वाले एंट्रेंस दरवाज़े।',
+                    pa: '3D-ਐਡਜਸਟੇਬਲ ਹਿੰਜ ਵਾਲੇ ਕੇਸਮੈਂਟ ਦਰਵਾਜ਼ੇ, ਸਿੰਗਲ ਅਤੇ ਡਬਲ ਖੁੱਲ੍ਹਣ ਵਾਲੇ ਦਰਵਾਜ਼ੇ, ਫ਼੍ਰੈਂਚ ਅਤੇ ਬਾਲਕਨੀ ਦਰਵਾਜ਼ੇ, ਅਤੇ ਰੀਇਨਫ਼ੋਰਸਡ ਸਟੀਲ ਕੋਰ ਵਾਲੇ ਐਂਟਰੈਂਸ ਦਰਵਾਜ਼ੇ।'
+                  }
+                }
+              ],
+              keywords: ['door', 'sliding door', 'lift and slide', 'casement door', 'french door', 'entrance door', 'balcony door', 'दरवाज', 'ਦਰਵਾਜ'],
               page: 'upvc-systems.html'
             }
           ]
@@ -625,6 +648,7 @@ window.JK_CHATBOT_CATALOG = {
                 { en: 'Up to 30% thermal energy savings', hi: '30% तक थर्मल ऊर्जा बचत', pa: '30% ਤੱਕ ਥਰਮਲ ਊਰਜਾ ਬਚਤ' }
               ],
               uses: { en: 'Homes and hotels near roads, markets or airports.', hi: 'सड़क, बाज़ार या एयरपोर्ट के पास घर और होटल।', pa: 'ਸੜਕ, ਬਾਜ਼ਾਰ ਜਾਂ ਹਵਾਈ ਅੱਡੇ ਨੇੜੇ ਘਰ ਅਤੇ ਹੋਟਲ।' },
+              keywords: ['acoustic', 'soundproof', 'sound proof'],
               page: 'upvc-systems.html'
             }
           ]

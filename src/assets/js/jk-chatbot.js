@@ -8,7 +8,16 @@
 
    Journey: greeting -> language -> name + mobile (email optional) -> menu ->
    Category -> Subcategory -> Product -> questions / requirements -> summary ->
-   submit (success is shown ONLY after the ERP confirms).
+   submit (success is shown ONLY after the ERP confirms). A subcategory with one
+   product skips the product step: Aluminium / uPVC visitors choose Windows or
+   Doors, never a window or door style they may not know.
+
+   Photos & drawings: once the visitor has given their details (and the ERP
+   reports `attachments: true`), the paper-clip in the message bar, the "Send a
+   photo or drawing" option and the "Add a photo or drawing" button on the
+   summary / Edit form send files to the ERP's `attach` action, which keeps
+   them with the lead's conversation (max 5). Photos are resized to a ~1600 px
+   JPEG in the browser; PDF drawings go as-is (max 3 MB).
 
    Answers are NOT AI-generated. They come from:
      - assets/js/jk-chatbot-catalog.js  (verified product catalogue)  KNOWLEDGE_BASE
@@ -123,12 +132,31 @@
       salesIntro: 'You can reach our sales team directly:',
       salesWa: 'WhatsApp us', salesCall: 'Call {area}', salesEmail: 'Email sales',
       salesNext: 'Or request a call back and our team will contact you.',
-      summaryTitle: 'Please check your enquiry before submitting:',
+      summaryTitle: 'Here is your enquiry. Please check the details, then confirm below.',
       sName: 'Name', sPhone: 'Mobile', sEmail: 'Email', sLang: 'Language', sCat: 'Product category', sSub: 'Subcategory',
-      sProduct: 'Interested product', sQuantity: 'Quantity', sSpecs: 'Specifications', sLocation: 'Delivery location',
-      sTimeline: 'Timeline', sQuote: 'Quotation required', sMessage: 'Additional message', sCall: 'Call back requested',
+      sProduct: 'Product', sQuantity: 'Quantity', sSpecs: 'Size / specifications', sLocation: 'Delivery location',
+      sTimeline: 'Timeline', sQuote: 'Quotation required', sMessage: 'Message', sCall: 'Call back requested',
       sYes: 'Yes', sNo: 'No', sNone: '—',
+      sumDetails: 'Your details', sumRequirement: 'Your requirement', sPhotos: 'Photos & drawings', sPhotosN: '{n} attached',
+      sNotSure: 'Not decided yet', tagQuote: 'Quotation requested', tagCall: 'Call back requested',
+      sumNote: 'Our sales team will contact you shortly after you submit.',
       confirm: 'Confirm & submit', edit: 'Edit details',
+      qStyles: 'Types available',
+      stylesIntro: '**{product}** come in these types:',
+      stylesHelp: 'You don’t need to choose now: our team will suggest the right type for your space.',
+      attachPhoto: 'Attach a photo or drawing', photoOption: '📎 Send a photo or drawing',
+      attachAdd: 'Add a photo or drawing', attachHint: 'Photos (JPG, PNG) or PDF drawings up to 3 MB · up to {n} files',
+      pdfLabel: 'PDF drawing',
+      rq_specificationsPhoto: 'What size, thickness or specifications do you need?\nNot sure? You can also send a photo or drawing.',
+      photoUploading: 'Uploading…',
+      photoAdded: 'Thank you! It has been added to your enquiry, so our team can see it.',
+      photosAdded: 'Thank you! All {n} files have been added to your enquiry, so our team can see them.',
+      photoFailed: 'Sorry, your file could not be uploaded just now. Please try again, or send it to us on WhatsApp.',
+      photoUnsupported: 'Sorry, I couldn’t open that file. Please choose a photo (JPG or PNG) or a PDF drawing.',
+      photoTooBig: 'That PDF is larger than 3 MB, so it can’t be sent here. Please send it to us on WhatsApp.',
+      photoTooMany: 'You can add up to {n} photos or drawings to one enquiry. You can send more to us on WhatsApp.',
+      photoUnavailable: 'Sorry, uploading files isn’t available right now. You can send it to us on WhatsApp.',
+      photoContinue: 'Continue', photoAlt: 'Photo you sent',
       editTitle: 'Update your details:',
       submitting: 'Submitting your enquiry…',
       success: 'Thank you for contacting JK Glasses!\nYour enquiry has been successfully submitted.\nOur sales team will contact you shortly.',
@@ -209,12 +237,31 @@
       salesIntro: 'आप हमारी सेल्स टीम से सीधे संपर्क कर सकते हैं:',
       salesWa: 'WhatsApp करें', salesCall: 'कॉल करें: {area}', salesEmail: 'सेल्स को ईमेल करें',
       salesNext: 'या कॉल बैक माँगें, हमारी टीम आपसे संपर्क करेगी।',
-      summaryTitle: 'भेजने से पहले कृपया अपनी पूछताछ जाँच लें:',
+      summaryTitle: 'यह रही आपकी पूछताछ। कृपया जानकारी जाँच लें, फिर नीचे पुष्टि करें।',
       sName: 'नाम', sPhone: 'मोबाइल', sEmail: 'ईमेल', sLang: 'भाषा', sCat: 'उत्पाद श्रेणी', sSub: 'उप-श्रेणी',
-      sProduct: 'पसंदीदा उत्पाद', sQuantity: 'मात्रा', sSpecs: 'स्पेसिफ़िकेशन', sLocation: 'डिलीवरी लोकेशन',
-      sTimeline: 'समय-सीमा', sQuote: 'कोटेशन चाहिए', sMessage: 'अतिरिक्त संदेश', sCall: 'कॉल बैक माँगा',
+      sProduct: 'उत्पाद', sQuantity: 'मात्रा', sSpecs: 'साइज़ / स्पेसिफ़िकेशन', sLocation: 'डिलीवरी लोकेशन',
+      sTimeline: 'समय-सीमा', sQuote: 'कोटेशन चाहिए', sMessage: 'संदेश', sCall: 'कॉल बैक माँगा',
       sYes: 'हाँ', sNo: 'नहीं', sNone: '—',
+      sumDetails: 'आपकी जानकारी', sumRequirement: 'आपकी ज़रूरत', sPhotos: 'फ़ोटो और ड्रॉइंग', sPhotosN: '{n} जोड़ी गईं',
+      sNotSure: 'अभी तय नहीं', tagQuote: 'कोटेशन माँगा', tagCall: 'कॉल बैक माँगा',
+      sumNote: 'भेजने के बाद हमारी सेल्स टीम जल्द ही आपसे संपर्क करेगी।',
       confirm: 'पुष्टि करें और भेजें', edit: 'जानकारी बदलें',
+      qStyles: 'उपलब्ध प्रकार',
+      stylesIntro: '**{product}** इन प्रकारों में उपलब्ध हैं:',
+      stylesHelp: 'आपको अभी चुनने की ज़रूरत नहीं: आपकी जगह के लिए सही प्रकार हमारी टीम सुझाएगी।',
+      attachPhoto: 'फ़ोटो या ड्रॉइंग जोड़ें', photoOption: '📎 फ़ोटो या ड्रॉइंग भेजें',
+      attachAdd: 'फ़ोटो या ड्रॉइंग जोड़ें', attachHint: 'फ़ोटो (JPG, PNG) या 3 MB तक की PDF ड्रॉइंग · अधिकतम {n} फ़ाइलें',
+      pdfLabel: 'PDF ड्रॉइंग',
+      rq_specificationsPhoto: 'आपको कौन-सी मोटाई, साइज़ या स्पेसिफ़िकेशन चाहिए?\nपक्का नहीं पता? आप फ़ोटो या ड्रॉइंग भी भेज सकते हैं।',
+      photoUploading: 'अपलोड हो रहा है…',
+      photoAdded: 'धन्यवाद! इसे आपकी पूछताछ में जोड़ दिया गया है, ताकि हमारी टीम इसे देख सके।',
+      photosAdded: 'धन्यवाद! सभी {n} फ़ाइलें आपकी पूछताछ में जोड़ दी गई हैं, ताकि हमारी टीम इन्हें देख सके।',
+      photoFailed: 'माफ़ कीजिए, अभी आपकी फ़ाइल अपलोड नहीं हो सकी। कृपया फिर से कोशिश करें, या इसे WhatsApp पर भेजें।',
+      photoUnsupported: 'माफ़ कीजिए, यह फ़ाइल नहीं खुल सकी। कृपया कोई फ़ोटो (JPG या PNG) या PDF ड्रॉइंग चुनें।',
+      photoTooBig: 'यह PDF 3 MB से बड़ी है, इसलिए यहाँ नहीं भेजी जा सकती। कृपया इसे WhatsApp पर भेजें।',
+      photoTooMany: 'एक पूछताछ में आप {n} फ़ोटो या ड्रॉइंग तक जोड़ सकते हैं। और फ़ाइलें आप WhatsApp पर भेज सकते हैं।',
+      photoUnavailable: 'माफ़ कीजिए, अभी फ़ाइल अपलोड उपलब्ध नहीं है। आप इसे WhatsApp पर भेज सकते हैं।',
+      photoContinue: 'आगे बढ़ें', photoAlt: 'आपकी भेजी फ़ोटो',
       editTitle: 'अपनी जानकारी अपडेट करें:',
       submitting: 'आपकी पूछताछ भेजी जा रही है…',
       success: 'JK Glasses से संपर्क करने के लिए धन्यवाद!\nआपकी पूछताछ सफलतापूर्वक भेज दी गई है।\nहमारी सेल्स टीम जल्द ही आपसे संपर्क करेगी।',
@@ -295,12 +342,31 @@
       salesIntro: 'ਤੁਸੀਂ ਸਾਡੀ ਸੇਲਜ਼ ਟੀਮ ਨਾਲ ਸਿੱਧਾ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ:',
       salesWa: 'WhatsApp ਕਰੋ', salesCall: 'ਕਾਲ ਕਰੋ: {area}', salesEmail: 'ਸੇਲਜ਼ ਨੂੰ ਈਮੇਲ ਕਰੋ',
       salesNext: 'ਜਾਂ ਕਾਲ ਬੈਕ ਮੰਗੋ, ਸਾਡੀ ਟੀਮ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੇਗੀ।',
-      summaryTitle: 'ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਪੁੱਛਗਿੱਛ ਜਾਂਚ ਲਓ:',
+      summaryTitle: 'ਇਹ ਰਹੀ ਤੁਹਾਡੀ ਪੁੱਛਗਿੱਛ। ਕਿਰਪਾ ਕਰਕੇ ਜਾਣਕਾਰੀ ਜਾਂਚ ਲਓ, ਫਿਰ ਹੇਠਾਂ ਪੁਸ਼ਟੀ ਕਰੋ।',
       sName: 'ਨਾਮ', sPhone: 'ਮੋਬਾਈਲ', sEmail: 'ਈਮੇਲ', sLang: 'ਭਾਸ਼ਾ', sCat: 'ਉਤਪਾਦ ਸ਼੍ਰੇਣੀ', sSub: 'ਉਪ-ਸ਼੍ਰੇਣੀ',
-      sProduct: 'ਪਸੰਦੀਦਾ ਉਤਪਾਦ', sQuantity: 'ਮਾਤਰਾ', sSpecs: 'ਸਪੈਸੀਫ਼ਿਕੇਸ਼ਨ', sLocation: 'ਡਿਲਿਵਰੀ ਲੋਕੇਸ਼ਨ',
-      sTimeline: 'ਸਮਾਂ-ਸੀਮਾ', sQuote: 'ਕੋਟੇਸ਼ਨ ਚਾਹੀਦਾ ਹੈ', sMessage: 'ਵਾਧੂ ਸੁਨੇਹਾ', sCall: 'ਕਾਲ ਬੈਕ ਮੰਗਿਆ',
+      sProduct: 'ਉਤਪਾਦ', sQuantity: 'ਮਾਤਰਾ', sSpecs: 'ਸਾਈਜ਼ / ਸਪੈਸੀਫ਼ਿਕੇਸ਼ਨ', sLocation: 'ਡਿਲਿਵਰੀ ਲੋਕੇਸ਼ਨ',
+      sTimeline: 'ਸਮਾਂ-ਸੀਮਾ', sQuote: 'ਕੋਟੇਸ਼ਨ ਚਾਹੀਦਾ ਹੈ', sMessage: 'ਸੁਨੇਹਾ', sCall: 'ਕਾਲ ਬੈਕ ਮੰਗਿਆ',
       sYes: 'ਹਾਂ', sNo: 'ਨਹੀਂ', sNone: '—',
+      sumDetails: 'ਤੁਹਾਡੀ ਜਾਣਕਾਰੀ', sumRequirement: 'ਤੁਹਾਡੀ ਲੋੜ', sPhotos: 'ਫ਼ੋਟੋਆਂ ਅਤੇ ਡਰਾਇੰਗ', sPhotosN: '{n} ਜੋੜੀਆਂ',
+      sNotSure: 'ਹਾਲੇ ਤੈਅ ਨਹੀਂ', tagQuote: 'ਕੋਟੇਸ਼ਨ ਮੰਗਿਆ', tagCall: 'ਕਾਲ ਬੈਕ ਮੰਗਿਆ',
+      sumNote: 'ਭੇਜਣ ਤੋਂ ਬਾਅਦ ਸਾਡੀ ਸੇਲਜ਼ ਟੀਮ ਜਲਦੀ ਹੀ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੇਗੀ।',
       confirm: 'ਪੁਸ਼ਟੀ ਕਰੋ ਅਤੇ ਭੇਜੋ', edit: 'ਜਾਣਕਾਰੀ ਬਦਲੋ',
+      qStyles: 'ਉਪਲਬਧ ਕਿਸਮਾਂ',
+      stylesIntro: '**{product}** ਇਨ੍ਹਾਂ ਕਿਸਮਾਂ ਵਿੱਚ ਉਪਲਬਧ ਹਨ:',
+      stylesHelp: 'ਤੁਹਾਨੂੰ ਹੁਣੇ ਚੁਣਨ ਦੀ ਲੋੜ ਨਹੀਂ: ਤੁਹਾਡੀ ਥਾਂ ਲਈ ਸਹੀ ਕਿਸਮ ਸਾਡੀ ਟੀਮ ਸੁਝਾਏਗੀ।',
+      attachPhoto: 'ਫ਼ੋਟੋ ਜਾਂ ਡਰਾਇੰਗ ਜੋੜੋ', photoOption: '📎 ਫ਼ੋਟੋ ਜਾਂ ਡਰਾਇੰਗ ਭੇਜੋ',
+      attachAdd: 'ਫ਼ੋਟੋ ਜਾਂ ਡਰਾਇੰਗ ਜੋੜੋ', attachHint: 'ਫ਼ੋਟੋ (JPG, PNG) ਜਾਂ 3 MB ਤੱਕ ਦੀ PDF ਡਰਾਇੰਗ · ਵੱਧ ਤੋਂ ਵੱਧ {n} ਫ਼ਾਈਲਾਂ',
+      pdfLabel: 'PDF ਡਰਾਇੰਗ',
+      rq_specificationsPhoto: 'ਤੁਹਾਨੂੰ ਕਿਹੜੀ ਮੋਟਾਈ, ਸਾਈਜ਼ ਜਾਂ ਸਪੈਸੀਫ਼ਿਕੇਸ਼ਨ ਚਾਹੀਦੀ ਹੈ?\nਪੱਕਾ ਨਹੀਂ ਪਤਾ? ਤੁਸੀਂ ਫ਼ੋਟੋ ਜਾਂ ਡਰਾਇੰਗ ਵੀ ਭੇਜ ਸਕਦੇ ਹੋ।',
+      photoUploading: 'ਅੱਪਲੋਡ ਹੋ ਰਿਹਾ ਹੈ…',
+      photoAdded: 'ਧੰਨਵਾਦ! ਇਸਨੂੰ ਤੁਹਾਡੀ ਪੁੱਛਗਿੱਛ ਵਿੱਚ ਜੋੜ ਦਿੱਤਾ ਗਿਆ ਹੈ, ਤਾਂ ਜੋ ਸਾਡੀ ਟੀਮ ਇਸਨੂੰ ਦੇਖ ਸਕੇ।',
+      photosAdded: 'ਧੰਨਵਾਦ! ਸਾਰੀਆਂ {n} ਫ਼ਾਈਲਾਂ ਤੁਹਾਡੀ ਪੁੱਛਗਿੱਛ ਵਿੱਚ ਜੋੜ ਦਿੱਤੀਆਂ ਗਈਆਂ ਹਨ, ਤਾਂ ਜੋ ਸਾਡੀ ਟੀਮ ਇਨ੍ਹਾਂ ਨੂੰ ਦੇਖ ਸਕੇ।',
+      photoFailed: 'ਮਾਫ਼ ਕਰਨਾ, ਹਾਲੇ ਤੁਹਾਡੀ ਫ਼ਾਈਲ ਅੱਪਲੋਡ ਨਹੀਂ ਹੋ ਸਕੀ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ, ਜਾਂ ਇਸਨੂੰ WhatsApp ’ਤੇ ਭੇਜੋ।',
+      photoUnsupported: 'ਮਾਫ਼ ਕਰਨਾ, ਇਹ ਫ਼ਾਈਲ ਨਹੀਂ ਖੁੱਲ੍ਹ ਸਕੀ। ਕਿਰਪਾ ਕਰਕੇ ਕੋਈ ਫ਼ੋਟੋ (JPG ਜਾਂ PNG) ਜਾਂ PDF ਡਰਾਇੰਗ ਚੁਣੋ।',
+      photoTooBig: 'ਇਹ PDF 3 MB ਤੋਂ ਵੱਡੀ ਹੈ, ਇਸ ਲਈ ਇੱਥੇ ਨਹੀਂ ਭੇਜੀ ਜਾ ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਇਸਨੂੰ WhatsApp ’ਤੇ ਭੇਜੋ।',
+      photoTooMany: 'ਇੱਕ ਪੁੱਛਗਿੱਛ ਵਿੱਚ ਤੁਸੀਂ {n} ਫ਼ੋਟੋਆਂ ਜਾਂ ਡਰਾਇੰਗ ਤੱਕ ਜੋੜ ਸਕਦੇ ਹੋ। ਹੋਰ ਫ਼ਾਈਲਾਂ ਤੁਸੀਂ WhatsApp ’ਤੇ ਭੇਜ ਸਕਦੇ ਹੋ।',
+      photoUnavailable: 'ਮਾਫ਼ ਕਰਨਾ, ਹਾਲੇ ਫ਼ਾਈਲ ਅੱਪਲੋਡ ਉਪਲਬਧ ਨਹੀਂ ਹੈ। ਤੁਸੀਂ ਇਸਨੂੰ WhatsApp ’ਤੇ ਭੇਜ ਸਕਦੇ ਹੋ।',
+      photoContinue: 'ਅੱਗੇ ਵਧੋ', photoAlt: 'ਤੁਹਾਡੀ ਭੇਜੀ ਫ਼ੋਟੋ',
       editTitle: 'ਆਪਣੀ ਜਾਣਕਾਰੀ ਅੱਪਡੇਟ ਕਰੋ:',
       submitting: 'ਤੁਹਾਡੀ ਪੁੱਛਗਿੱਛ ਭੇਜੀ ਜਾ ਰਹੀ ਹੈ…',
       success: 'JK Glasses ਨਾਲ ਸੰਪਰਕ ਕਰਨ ਲਈ ਧੰਨਵਾਦ!\nਤੁਹਾਡੀ ਪੁੱਛਗਿੱਛ ਸਫਲਤਾਪੂਰਵਕ ਭੇਜ ਦਿੱਤੀ ਗਈ ਹੈ।\nਸਾਡੀ ਸੇਲਜ਼ ਟੀਮ ਜਲਦੀ ਹੀ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੇਗੀ।',
@@ -323,7 +389,7 @@
     delivery: ['delivery time', 'how long', 'how many days', 'how soon', 'lead time', 'time to deliver', 'kitne din', 'कितने दिन', 'कितना समय', 'कब तक', 'डिलीवरी टाइम', 'ਕਿੰਨੇ ਦਿਨ', 'ਕਿੰਨਾ ਸਮਾਂ', 'ਕਦੋਂ ਤੱਕ', 'ਡਿਲਿਵਰੀ ਟਾਈਮ'],
     cert: ['certif', 'iso', 'bis', 'is 2553', 'standard', 'प्रमाण', 'सर्टिफ', 'ਸਰਟੀਫ', 'ਪ੍ਰਮਾਣ'],
     specs: ['thickness', 'thick', 'mm', 'size', 'sizes', 'specification', 'specs', 'dimension', 'maximum size', 'मोटाई', 'साइज़', 'साइज', 'स्पेसिफ', 'ਮੋਟਾਈ', 'ਸਾਈਜ਼', 'ਸਾਈਜ', 'ਸਪੈਸੀਫ'],
-    diff: ['difference', 'different', 'compare', 'comparison', ' vs ', 'versus', 'better', 'फर्क', 'फ़र्क', 'अंतर', 'तुलना', 'ਫ਼ਰਕ', 'ਫਰਕ', 'ਤੁਲਨਾ'],
+    diff: ['difference', 'different', 'compare', 'comparison', ' vs ', 'versus', 'better', 'types', 'which type', 'styles', 'kinds', 'फर्क', 'फ़र्क', 'अंतर', 'तुलना', 'प्रकार', 'ਫ਼ਰਕ', 'ਫਰਕ', 'ਤੁਲਨਾ', 'ਕਿਸਮ'],
     uses: ['used for', 'use it', 'application', 'where can', 'where is', 'uses', 'उपयोग', 'इस्तेमाल', 'ਵਰਤੋਂ', 'ਇਸਤੇਮਾਲ'],
     quote: ['quotation', 'quote', 'estimate', 'कोटेशन', 'अनुमान', 'ਕੋਟੇਸ਼ਨ'],
     contact: ['call me', 'callback', 'call back', 'talk to', 'speak to', 'sales team', 'phone number', 'contact', 'whatsapp', 'संपर्क', 'कॉल', 'ਸੰਪਰਕ', 'ਕਾਲ']
@@ -356,7 +422,8 @@
       open: false,
       lang: (keep && keep.lang) || 'en',
       contact: (keep && keep.contact) || null,
-      erp: { token: '', ref: '', ai: false, startedOk: false, syncedSeq: 0 },
+      // attachments: null until the ERP says whether it accepts photos (start response).
+      erp: { token: '', ref: '', ai: false, attachments: null, startedOk: false, syncedSeq: 0 },
       seq: 0,
       messages: [],
       stack: [],
@@ -482,6 +549,12 @@
           if (!scores[entry.prod.id] || score > scores[entry.prod.id]) { scores[entry.prod.id] = score; entries[entry.prod.id] = entry; }
         }
       });
+      // Style words ("sliding window", "casement") ADD to a label match, so
+      // "aluminium sliding window" beats "uPVC Windows" while "sliding window"
+      // alone stays a tie that the current category settles.
+      var kw = 0;
+      (entry.prod.keywords || []).forEach(function (k) { if (hasAny(text, [k])) kw = Math.max(kw, normalize(k).length); });
+      if (kw) { scores[entry.prod.id] = (scores[entry.prod.id] || 0) + kw; entries[entry.prod.id] = entry; }
     });
     var ids = Object.keys(scores).sort(function (a, b) { return scores[b] - scores[a]; });
     if (!ids.length) return null;
@@ -676,10 +749,12 @@
         state.erp.token = res.token;
         state.erp.ref = res.ref || '';
         state.erp.ai = res.ai === true;
+        if (typeof res.attachments === 'boolean') state.erp.attachments = res.attachments;
         state.erp.startedOk = true;
         state.erp.syncedSeq = Math.max(state.erp.syncedSeq, sentUpTo);
         startAttempts = 0;
         writeState();
+        applyChromeLight(); // the photo button follows what the ERP accepts
         scheduleSync(0); // anything newer than the first batch, plus selection / requirements
       }
       return res;
@@ -799,9 +874,12 @@
       '</header>' +
       '<div class="jk-cb-log" role="log" aria-live="polite" aria-relevant="additions"></div>' +
       '<form class="jk-cb-composer" autocomplete="off">' +
+        '<button type="button" class="jk-cb-attach" hidden>' + iconClip() + '</button>' +
         '<input class="jk-cb-input" type="text" maxlength="1000" />' +
         '<button type="submit" class="jk-cb-send">' + iconSend() + '</button>' +
       '</form>' +
+      // Off-screen rather than display:none: some mobile browsers refuse .click() on a hidden file input.
+      '<input class="jk-cb-file" type="file" accept="image/*,application/pdf,.pdf" multiple tabindex="-1" aria-hidden="true">' +
       '<p class="jk-cb-note"></p>' +
     '</section>';
   document.body.appendChild(root);
@@ -815,6 +893,8 @@
   var langBtn = q('.jk-cb-lang');
   var langMenu = q('.jk-cb-langmenu');
   var teaser = q('.jk-cb-teaser');
+  var attachBtn = q('.jk-cb-attach');
+  var fileInput = q('.jk-cb-file');
 
   function svg(paths) { return '<svg class="jk-cb-icon" viewBox="0 0 24 24" aria-hidden="true">' + paths + '</svg>'; }
   /** The assistant's robot: white head, navy visor with green eyes (blink), antenna light. */
@@ -835,6 +915,12 @@
   function iconBack() { return svg('<path d="M15 5l-7 7 7 7"/>'); }
   function iconHome() { return svg('<path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/>'); }
   function iconSend() { return svg('<path d="M4 12l16-8-6 16-2-7-8-1z"/>'); }
+  function iconClip() { return svg('<path d="M20 11.6l-7.9 7.9a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/>'); }
+  function iconDoc() { return svg('<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h4"/>'); }
+  function iconCheck() { return svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'); }
+  function iconEdit() { return svg('<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>'); }
+  function iconUser() { return svg('<circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/>'); }
+  function iconList() { return svg('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/>'); }
   function iconWa() { return '<svg class="jk-cb-icon jk-cb-icon--fill" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .3-3.4-.7-2.9-1.2-4.7-4.1-4.9-4.3-.1-.2-1.2-1.6-1.2-3s.7-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>'; }
   function iconPhone() { return svg('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'); }
   function iconMail() { return svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'); }
@@ -875,6 +961,7 @@
     langBtn.setAttribute('aria-label', t('language')); langBtn.title = t('language');
     q('.jk-cb-lang-code').textContent = LANG_SHORT[lang()];
     q('.jk-cb-send').setAttribute('aria-label', t('send'));
+    attachBtn.setAttribute('aria-label', t('attachPhoto')); attachBtn.title = t('attachPhoto');
     launcher.setAttribute('aria-label', t('launcher'));
     q('.jk-cb-teaser-text').textContent = t('launcherHint');
     Array.prototype.forEach.call(langMenu.querySelectorAll('button'), function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-lang') === lang())); });
@@ -897,6 +984,10 @@
     input.disabled = locked;
     q('.jk-cb-send').disabled = locked;
     input.placeholder = locked ? t('placeholderLocked') : awaiting ? (cur.hint || t('placeholderAnswer')) : t('placeholder');
+    // Files need the lead in the ERP, so only after the visitor's details; allowed on the summary and while editing too.
+    var canPhoto = photosEnabled();
+    attachBtn.hidden = !canPhoto;
+    attachBtn.disabled = !canPhoto || photoBusy || !cur || ['lang', 'contact', 'submitting'].indexOf(cur.id) !== -1;
   }
 
   /* ------------------------------------------------------------- Messages */
@@ -960,6 +1051,7 @@
     var visible = state.messages.filter(function (m) { return !m.silent; });
     var last = visible[visible.length - 1];
     visible.forEach(function (m) { log.appendChild(renderMessage(m, m === last)); });
+    if (pendingPhotoEl) log.appendChild(pendingPhotoEl);
     if (keepTyping) setTyping(true);
     applyChromeLight();
     scrollDown();
@@ -971,13 +1063,16 @@
     row.className = 'jk-cb-row jk-cb-row--' + (m.role === 'user' ? 'user' : 'bot');
     row.setAttribute('lang', m.lang || 'en');
     if (m.role === 'user') {
-      row.innerHTML = '<div class="jk-cb-bubble jk-cb-bubble--user">' + esc(m.text) + '</div>';
+      row.innerHTML = m.img && safeImg(m.img) ? photoHtml(m)
+        : m.doc && safeImg(m.doc) ? docHtml(m)
+        : '<div class="jk-cb-bubble jk-cb-bubble--user">' + esc(m.text) + '</div>';
       return row;
     }
     var welcome = m.ui && m.ui.type === 'welcome';
     if (welcome) row.className += ' jk-cb-row--welcome';
     var html = (welcome ? '' : '<div class="jk-cb-bot-avatar" aria-hidden="true">' + robotSvg('jk-bot--mini') + '</div>') + '<div class="jk-cb-bot-body">';
-    if (m.ui && m.ui.type === 'product') html += productCard(m.ui, m.lang);
+    // A product card whose product left the catalogue (an older saved chat) falls back to its text.
+    if (m.ui && m.ui.type === 'product') html += productCard(m.ui, m.lang) || '<div class="jk-cb-bubble">' + rich(m.md || m.text) + '</div>';
     else if (m.ui && m.ui.type === 'welcome') html += welcomeCard(m.lang);
     else html += '<div class="jk-cb-bubble' + (m.kind === 'FALLBACK' ? ' jk-cb-bubble--warn' : '') + '">' + rich(m.md || m.text) + '</div>';
     if (m.ui) html += renderUi(m.ui, isLast, m.lang);
@@ -1007,6 +1102,8 @@
   function renderUi(ui, active, l) {
     var dis = active ? '' : ' disabled';
     var html = '';
+    // The summary carries its own buttons, BELOW the details they confirm.
+    if (ui.type === 'summary') return summaryCard(ui, active, l);
     if (ui.options && ui.options.length) {
       var layout = ui.layout === 'lang' ? ' jk-cb-options--lang' : ui.grid ? ' jk-cb-options--grid' : ui.layout === 'list' ? ' jk-cb-options--list' : '';
       html += '<div class="jk-cb-options' + layout + '">' + ui.options.map(function (o, i) {
@@ -1028,8 +1125,8 @@
       }).join('') + '</div>';
     }
     if (ui.type === 'contact' || ui.type === 'edit') html += active ? contactForm(ui, lang()) : '';
-    if (ui.type === 'summary') html += summaryTable(l);
     if (ui.contacts) html += contactsHtml(l);
+    else if (ui.wa) html += '<div class="jk-cb-contacts">' + waContactHtml(l) + '</div>';
     return html;
   }
 
@@ -1057,10 +1154,13 @@
       return '<a class="jk-cb-contact" href="tel:' + esc(p.number) + '">' + iconPhone() + '<span><strong>' + esc(p.display) + '</strong><small>' + esc(L(p.area, l)) + '</small></span></a>';
     }).join('');
     return '<div class="jk-cb-contacts">' +
-      '<a class="jk-cb-contact jk-cb-contact--wa" href="' + esc(waLink(contactWaText())) + '" target="_blank" rel="noopener">' + iconWa() + '<span><strong>' + esc(t('salesWa', null, l)) + '</strong><small>' + esc(CONTACTS.whatsappDisplay || '') + '</small></span></a>' +
+      waContactHtml(l) +
       phones +
       (CONTACTS.email ? '<a class="jk-cb-contact" href="mailto:' + esc(CONTACTS.email) + '">' + iconMail() + '<span><strong>' + esc(t('salesEmail', null, l)) + '</strong><small>' + esc(CONTACTS.email) + '</small></span></a>' : '') +
       '</div>';
+  }
+  function waContactHtml(l) {
+    return '<a class="jk-cb-contact jk-cb-contact--wa" href="' + esc(waLink(contactWaText())) + '" target="_blank" rel="noopener">' + iconWa() + '<span><strong>' + esc(t('salesWa', null, l)) + '</strong><small>' + esc(CONTACTS.whatsappDisplay || '') + '</small></span></a>';
   }
   function contactWaText() {
     var s = selected();
@@ -1072,8 +1172,11 @@
   }
 
   function contactForm(ui, l) {
-    var c = state.contact || state.draft || { cc: '91', phone: '', name: '', email: '' };
     var edit = ui.type === 'edit';
+    // While editing, unsaved changes live in editDraft, so adding a file (which redraws the chat) keeps them.
+    var d = edit && state.editDraft;
+    var c = d || state.contact || state.draft || { cc: '91', phone: '', name: '', email: '' };
+    var reqVal = function (f) { return d ? d.req[f] || '' : state.req[f] || ''; };
     var reqFields = edit ? reqFieldsFor().concat(['message']).filter(function (f, i, a) { return a.indexOf(f) === i; }) : [];
     return '<form class="jk-cb-form" novalidate>' +
       field('name', t('fName', null, l), '<input name="name" type="text" autocomplete="name" maxlength="80" required value="' + esc(c.name) + '">') +
@@ -1082,8 +1185,9 @@
         '<input id="jk-cb-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="20" required value="' + esc(c.phone) + '"></div><p class="jk-cb-err" data-err="phone"></p></div>' +
       field('email', t('fEmail', null, l) + ' <span class="jk-cb-opt-label">(' + esc(t('fOptional', null, l)) + ')</span>', '<input name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" value="' + esc(c.email || '') + '">', true) +
       reqFields.map(function (f) {
-        return '<div class="jk-cb-field"><label>' + esc(t(summaryKey(f), null, l)) + '</label><input name="req-' + f + '" type="text" maxlength="500" value="' + esc(state.req[f] || '') + '"></div>';
+        return '<div class="jk-cb-field"><label>' + esc(t(summaryKey(f), null, l)) + '</label><input name="req-' + f + '" type="text" maxlength="500" value="' + esc(reqVal(f)) + '"></div>';
       }).join('') +
+      (edit && (photosEnabled() || sessionPhotos().length) ? '<div class="jk-cb-field"><label>' + esc(t('sPhotos', null, l)) + '</label>' + filesStrip(l, true) + '</div>' : '') +
       '<div class="jk-cb-hp" aria-hidden="true"><label>Website<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>' +
       (edit ? '' : '<p class="jk-cb-privacy">' + esc(t('privacy', null, l)) + '</p>') +
       '<div class="jk-cb-form-actions"><button type="submit" class="jk-cb-submit">' + esc(edit ? t('fSave', null, l) : t('fContinue', null, l)) + '</button>' +
@@ -1119,12 +1223,89 @@
     if (state.flags.salesContactRequested) rows.push([t('sCall', null, l), t('sYes', null, l)]);
     return rows;
   }
-  function summaryTable(l) {
-    return '<dl class="jk-cb-summary">' + summaryRows(l).map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('') + '</dl>';
+  /**
+   * What the visitor is about to send, as a card: their details, then their
+   * requirement (unanswered questions are left out, not shown as "—"), photos,
+   * and the Confirm / Edit buttons at the bottom, where the eye ends up.
+   */
+  function summaryCard(ui, active, l) {
+    var s = selected();
+    var c = state.contact || {};
+    var row = function (label, value) { return value ? '<div><dt>' + esc(label) + '</dt><dd>' + esc(value) + '</dd></div>' : ''; };
+    var product = s.prod ? L(s.prod.label, l) : s.sub ? L(s.cat.label, l) + ' › ' + L(s.sub.label, l) : s.cat ? L(s.cat.label, l) : t('sNotSure', null, l);
+    var photos = sessionPhotos();
+    var tags = [];
+    if (state.flags.quotationRequested) tags.push(t('tagQuote', null, l));
+    if (state.flags.salesContactRequested) tags.push(t('tagCall', null, l));
+    var dis = active ? '' : ' disabled';
+    return '<div class="jk-cb-sum">' +
+      (tags.length ? '<div class="jk-cb-sum-tags">' + tags.map(function (x) { return '<span>' + iconCheck() + esc(x) + '</span>'; }).join('') + '</div>' : '') +
+      '<section class="jk-cb-sum-sec"><h4 class="jk-cb-sum-h">' + iconUser() + esc(t('sumDetails', null, l)) + '</h4><dl class="jk-cb-sum-dl">' +
+        row(t('sName', null, l), c.name) + row(t('sPhone', null, l), displayPhone(c)) + row(t('sEmail', null, l), c.email) +
+      '</dl></section>' +
+      '<section class="jk-cb-sum-sec"><h4 class="jk-cb-sum-h">' + iconList() + esc(t('sumRequirement', null, l)) + '</h4><dl class="jk-cb-sum-dl">' +
+        row(t('sProduct', null, l), product) +
+        row(t('sQuantity', null, l), state.req.quantity) +
+        row(t('sSpecs', null, l), state.req.specifications) +
+        row(t('sLocation', null, l), state.req.deliveryLocation) +
+        row(t('sTimeline', null, l), state.req.timeline) +
+        row(t('sMessage', null, l), state.req.message) +
+        (photos.length ? row(t('sPhotos', null, l), t('sPhotosN', { n: photos.length }, l)) : '') +
+      '</dl>' +
+      filesStrip(l, active) +
+      '</section>' +
+      '<div class="jk-cb-sum-actions">' + (ui.options || []).map(function (o, i) {
+        return '<button type="button" class="jk-cb-sum-btn' + (o.primary ? ' jk-cb-sum-btn--primary' : '') + '" data-i="' + i + '"' + dis + '>' +
+          (o.primary ? iconCheck() : iconEdit()) + '<span>' + esc(o.label) + '</span></button>';
+      }).join('') + '</div>' +
+      '<p class="jk-cb-sum-note">' + esc(t('sumNote', null, l)) + '</p>' +
+    '</div>';
+  }
+
+  /* ------------------------------------------------------ Photos & drawings */
+  var MAX_PHOTOS = 5;
+  /** Photos (m.img) and PDF drawings (m.doc) sent in this conversation. */
+  function sessionPhotos() { return state.messages.filter(function (m) { return m.img || m.doc; }); }
+  /**
+   * The files sent so far, plus an "Add a photo or drawing" button while there
+   * is room — on the summary card and in the Edit form, where visitors look
+   * for it, not only behind the paper-clip in the message bar.
+   */
+  function filesStrip(l, active) {
+    var files = sessionPhotos();
+    var canAdd = photosEnabled() && files.length < MAX_PHOTOS;
+    if (!files.length && !canAdd) return '';
+    return '<div class="jk-cb-files">' + files.map(function (m) {
+      return m.doc
+        ? '<a class="jk-cb-file-tile jk-cb-file-tile--pdf" href="' + esc(safeImg(m.doc)) + '" target="_blank" rel="noopener" title="' + esc(m.name || '') + '">' + iconDoc() + '<span>PDF</span></a>'
+        : '<a class="jk-cb-file-tile" href="' + esc(safeImg(m.img)) + '" target="_blank" rel="noopener"><img src="' + esc(thumbOf(m.img)) + '" alt="" loading="lazy"></a>';
+    }).join('') +
+    (canAdd ? '<button type="button" class="jk-cb-file-add" data-photo' + (active ? '' : ' disabled') + '>' + iconClip() + '<span>' + esc(t('attachAdd', null, l)) + '</span></button>' : '') +
+    '</div>' +
+    (canAdd ? '<p class="jk-cb-file-hint">' + esc(t('attachHint', { n: MAX_PHOTOS }, l)) + '</p>' : '');
+  }
+  function docHtml(m) {
+    return '<a class="jk-cb-doc" href="' + esc(safeImg(m.doc)) + '" target="_blank" rel="noopener">' + iconDoc() +
+      '<span><strong>' + esc(m.name || 'drawing.pdf') + '</strong><small>' + esc(t('pdfLabel', null, m.lang)) + '</small></span></a>';
+  }
+  /** Only an https URL (or the local test harness) is ever put in an <img>. */
+  function safeImg(url) {
+    url = String(url || '');
+    return /^https:\/\/[^\s"'<>]+$/.test(url) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/[^\s"'<>]*$/.test(url) ? url : '';
+  }
+  /** Cloudinary resizes on delivery: a light preview in the chat, the original on tap. */
+  function thumbOf(url) {
+    url = safeImg(url);
+    return /^https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\//.test(url) ? url.replace('/image/upload/', '/image/upload/c_limit,w_480,h_480,q_auto,f_auto/') : url;
+  }
+  function photoHtml(m) {
+    var ratio = +m.w > 0 && +m.h > 0 ? ' style="aspect-ratio:' + (+m.w) + ' / ' + (+m.h) + '"' : '';
+    return '<a class="jk-cb-photo" href="' + esc(safeImg(m.img)) + '" target="_blank" rel="noopener">' +
+      '<img src="' + esc(thumbOf(m.img)) + '" alt="' + esc(t('photoAlt', null, m.lang)) + '" loading="lazy"' + ratio + '></a>';
   }
 
   function bindUi(row, ui) {
-    Array.prototype.forEach.call(row.querySelectorAll('.jk-cb-opt'), function (btn) {
+    Array.prototype.forEach.call(row.querySelectorAll('.jk-cb-opt, .jk-cb-sum-btn'), function (btn) {
       btn.addEventListener('click', function () {
         if (root.classList.contains('jk-cb--busy')) return;
         var o = ui.options[Number(btn.getAttribute('data-i'))];
@@ -1132,6 +1313,9 @@
         if (o.echo !== false) user(o.label, 'OPTION');
         act(o.act, o.data || {});
       });
+    });
+    Array.prototype.forEach.call(row.querySelectorAll('[data-photo]'), function (btn) {
+      btn.addEventListener('click', function () { if (!root.classList.contains('jk-cb--busy')) pickPhoto(); });
     });
     var form = row.querySelector('.jk-cb-form');
     if (form) bindForm(form, ui);
@@ -1142,10 +1326,16 @@
     var edit = ui.type === 'edit';
     var nameEl = form.querySelector('[name=name]');
     if (!edit) setTimeout(function () { try { nameEl.focus({ preventScroll: true }); } catch (e) { /* */ } }, 50);
-    // Keep typed values if the visitor navigates away and back.
+    // Keep typed values if the visitor navigates away and back (or adds a file mid-edit).
     form.addEventListener('input', function () {
-      if (edit) return;
-      state.draft = { name: nameEl.value, cc: form.querySelector('[name=cc]').value, phone: form.querySelector('[name=phone]').value, email: form.querySelector('[name=email]').value };
+      var draft = { name: nameEl.value, cc: form.querySelector('[name=cc]').value, phone: form.querySelector('[name=phone]').value, email: form.querySelector('[name=email]').value };
+      if (edit) {
+        draft.req = {};
+        Array.prototype.forEach.call(form.querySelectorAll('[name^=req-]'), function (inp) { draft.req[inp.name.slice(4)] = inp.value; });
+        state.editDraft = draft;
+      } else {
+        state.draft = draft;
+      }
       writeState();
     });
     var cancel = form.querySelector('.jk-cb-cancel');
@@ -1336,6 +1526,11 @@
       var key = f === 'message' && state.enquiryType === 'OTHER' ? 'rq_messageOther' : 'rq_' + f;
       var opts = [];
       if (f === 'timeline') opts = ['tNow', 't1m', 't3m', 'tLater'].map(function (k) { return { label: t(k), act: 'answer', data: { field: f, value: t(k) } }; });
+      // Many visitors can't name a size or spec: a photo of the opening says it for them.
+      if (f === 'specifications' && photosEnabled()) {
+        key = 'rq_specificationsPhoto';
+        opts.push({ label: t('photoOption'), act: 'photo', echo: false });
+      }
       if (!(f === 'message' && state.enquiryType === 'OTHER')) opts.push({ label: t('skip'), act: 'skipField', data: { field: f }, subtle: true });
       var cur = current();
       cur.hint = hintFor(f);
@@ -1352,7 +1547,9 @@
       }, { kind: 'SUMMARY' });
       // The transcript keeps a readable copy of what the visitor confirmed.
       var m = state.messages[state.messages.length - 1];
-      m.text = plain(t('summaryTitle')) + '\n' + summaryRows(lang()).map(function (r) { return r[0] + ': ' + r[1]; }).join('\n');
+      var photos = sessionPhotos().length;
+      m.text = plain(t('summaryTitle')) + '\n' + summaryRows(lang()).map(function (r) { return r[0] + ': ' + r[1]; }).join('\n') +
+        (photos ? '\n' + t('sPhotos') + ': ' + photos : '');
       writeState();
     },
     edit: function () {
@@ -1372,15 +1569,20 @@
   };
 
   function intentOptions() {
-    return [
+    var prod = selected().prod;
+    var styled = !!(prod && prod.styles && prod.styles.length);
+    var opts = [
       { label: t('qSpecs'), act: 'intent', data: { intent: 'specs' } },
       { label: t('qPrice'), act: 'intent', data: { intent: 'price' } },
       { label: t('qMoq'), act: 'intent', data: { intent: 'moq' } },
       { label: t('qDelivery'), act: 'intent', data: { intent: 'delivery' } },
       { label: t('qCert'), act: 'intent', data: { intent: 'cert' } },
-      { label: t('qDiff'), act: 'intent', data: { intent: 'diff' } },
       { label: t('qUses'), act: 'intent', data: { intent: 'uses' } }
     ];
+    // Windows / doors: "which types are there?" is the natural question, so it comes first.
+    if (styled) opts.unshift({ label: t('qStyles'), act: 'intent', data: { intent: 'diff' } });
+    else opts.splice(5, 0, { label: t('qDiff'), act: 'intent', data: { intent: 'diff' } });
+    return opts;
   }
 
   function hintFor(f) {
@@ -1497,8 +1699,12 @@
         }
         if (!state.enquiryType || state.enquiryType === 'PRODUCTS') state.enquiryType = 'TECHNICAL';
         return go('summary');
-      case 'summary': return go('summary', null, { replace: current() && current().id === 'edit' });
-      case 'edit': return go('edit');
+      case 'summary':
+        state.editDraft = null; // saved or cancelled: the draft is done
+        return go('summary', null, { replace: current() && current().id === 'edit' });
+      case 'edit':
+        state.editDraft = null;
+        return go('edit');
       case 'submit': return go('submitting');
       case 'newEnquiry': {
         var keep = { lang: state.lang, contact: state.contact };
@@ -1514,6 +1720,16 @@
         return go('menu', { again: true });
       }
       case 'close': return toggle(false);
+      case 'photo': return pickPhoto();
+      case 'photoRetry': {
+        if (!failedPhotos.length) return pickPhoto();
+        var again = failedPhotos;
+        failedPhotos = [];
+        return sendPhotos(again);
+      }
+      case 'photoContinue':
+        failedPhotos = [];
+        return reply(function () { continueAfterPhoto(''); });
     }
   }
 
@@ -1600,6 +1816,11 @@
         return bot('**' + name + '**: ' + L(s.prod.uses), { options: answerOptions() }, { kind: 'ANSWER', src: 'KNOWLEDGE_BASE' });
       case 'diff': {
         if (!s.prod) return go('categories', { mode: 'ask' }, { delay: 1 });
+        if (s.prod.styles && s.prod.styles.length) {
+          if (repeated('diff:' + s.prod.id)) return;
+          var styles = s.prod.styles.map(function (st) { return '- **' + L(st.label) + '**: ' + L(st.text); }).join('\n');
+          return bot(t('stylesIntro', { product: name }) + '\n' + styles + '\n' + t('stylesHelp'), { options: answerOptions() }, { kind: 'ANSWER', src: 'KNOWLEDGE_BASE' });
+        }
         if (repeated('diff:' + s.sub.id)) return;
         if (s.sub.products.length < 2) return bot(t('compareSingle', { product: name }), { options: [{ label: t('aAnother'), act: 'explore' }].concat(answerOptions()) }, { kind: 'ANSWER', src: 'KNOWLEDGE_BASE' });
         var lines = s.sub.products.map(function (p) { return '- **' + L(p.label) + '**: ' + L(p.summary); }).join('\n');
@@ -1702,6 +1923,207 @@
     });
   }
 
+  /* ======================================================== Photo upload */
+  var photoBusy = false;
+  var failedPhotos = [];
+  var pendingPhotoEl = null;
+
+  /**
+   * Only when the ERP has said it accepts photos (`attachments: true` in its
+   * start response). An ERP without the `attach` action, or with Cloudinary off,
+   * never shows a camera button that could only fail.
+   */
+  function photosEnabled() { return !!state.contact && state.erp.attachments === true && erpConfigured(); }
+
+  function pickPhoto() {
+    if (!photosEnabled() || photoBusy || root.classList.contains('jk-cb--busy')) return;
+    fileInput.value = '';
+    fileInput.click();
+  }
+
+  /**
+   * Decode the chosen image and re-encode it as a JPEG of at most 1600 px (phone
+   * photos are 3–12 MB; this is ~200–600 KB), plus a tiny preview for the
+   * "uploading" bubble. Rejects with a TEXT key when the file can't be opened
+   * (e.g. HEIC outside Safari, or not an image at all).
+   */
+  var MAX_PDF_BYTES = 3 * 1000 * 1000; // the ERP's LIMITS.pdfBytes
+  function preparePhoto(file) {
+    var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name || '');
+    if (isPdf) return preparePdf(file);
+    return new Promise(function (resolve, reject) {
+      var looksImage = /^image\//.test(file.type || '') || /\.(jpe?g|png|webp|gif|bmp|heic|heif)$/i.test(file.name || '');
+      if (!looksImage || file.size > 40 * 1024 * 1024) return reject('photoUnsupported');
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var w = img.naturalWidth;
+          var h = img.naturalHeight;
+          if (!w || !h) throw new Error('empty image');
+          var encode = function (maxSide, quality) {
+            var scale = Math.min(1, maxSide / Math.max(w, h));
+            var canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(w * scale));
+            canvas.height = Math.max(1, Math.round(h * scale));
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#fff'; // transparent PNGs become white, not black
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            return canvas.toDataURL('image/jpeg', quality);
+          };
+          var data = encode(1600, 0.82);
+          if (data.length > 2400000) data = encode(1280, 0.72);
+          if (data.length > 3000000) data = encode(1024, 0.6);
+          var preview = encode(360, 0.7);
+          URL.revokeObjectURL(url);
+          resolve({ name: (file.name || 'photo').slice(0, 120), data: data.slice(data.indexOf(',') + 1), preview: preview, seq: 0 });
+        } catch (e) {
+          URL.revokeObjectURL(url);
+          reject('photoUnsupported');
+        }
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject('photoUnsupported'); };
+      img.src = url;
+    });
+  }
+
+  /** A PDF drawing is sent as-is (it can't be shrunk in the browser), so it has its own size limit. */
+  function preparePdf(file) {
+    return new Promise(function (resolve, reject) {
+      if (file.size > MAX_PDF_BYTES) return reject('photoTooBig');
+      var reader = new FileReader();
+      reader.onload = function () {
+        var data = String(reader.result || '');
+        resolve({ name: (file.name || 'drawing.pdf').slice(0, 120), data: data.slice(data.indexOf(',') + 1), preview: '', pdf: true, seq: 0 });
+      };
+      reader.onerror = function () { reject('photoUnsupported'); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /**
+   * Send one prepared photo. Its seq is taken once and kept for retries: the
+   * ERP stores (session, seq) once, so "Try again" after a lost response can
+   * never store the same photo twice.
+   */
+  function uploadPhoto(prep) {
+    var ensure = state.erp.startedOk ? Promise.resolve({ ok: true }) : erpStart(9000);
+    return ensure.then(function (res) {
+      if (!res.ok) return res;
+      if (state.erp.attachments === false) return { ok: false, error: 'attachments_unavailable' };
+      if (!prep.seq) { prep.seq = ++state.seq; writeState(); }
+      var send = function () {
+        return post({
+          action: 'attach', sessionKey: state.sessionKey, token: state.erp.token, seq: prep.seq, language: state.lang,
+          file: { name: prep.name, data: prep.data }
+        }, { timeout: 60000 });
+      };
+      return send().then(function (r) {
+        if (r.error !== 'unauthorized') return r;
+        state.erp.startedOk = false;
+        return erpStart().then(function (s) { return s.ok ? send() : s; });
+      });
+    }).then(function (r) {
+      if (r.ok) {
+        var url = safeImg(r.url);
+        if (!url) return { ok: false, error: 'bad_response' };
+        state.messages.push(prep.pdf
+          ? { role: 'user', kind: 'ATTACHMENT', text: 'Drawing (PDF): ' + prep.name, doc: url, name: prep.name, seq: prep.seq, at: Date.now(), lang: lang() }
+          : { role: 'user', kind: 'ATTACHMENT', text: 'Photo: ' + prep.name, img: url, w: +r.width || 0, h: +r.height || 0, seq: prep.seq, at: Date.now(), lang: lang() });
+        writeState();
+        renderAll();
+        scheduleSync();
+      } else if (r.error === 'seq_conflict') {
+        prep.seq = 0; // that number was taken by another line: the next try takes a fresh one
+      }
+      return r;
+    });
+  }
+
+  function showPendingPhoto(prep) {
+    hidePendingPhoto();
+    var status = '<span class="jk-cb-photo-status"><span class="jk-cb-spin" aria-hidden="true"></span>' + esc(t('photoUploading')) + '</span>';
+    pendingPhotoEl = document.createElement('div');
+    pendingPhotoEl.className = 'jk-cb-row jk-cb-row--user';
+    pendingPhotoEl.innerHTML = prep.pdf
+      ? '<div class="jk-cb-doc jk-cb-doc--pending" role="status">' + iconDoc() + '<span><strong>' + esc(prep.name) + '</strong>' + status + '</span></div>'
+      : '<div class="jk-cb-photo jk-cb-photo--pending" role="status"><img src="' + esc(prep.preview) + '" alt="">' + status + '</div>';
+    log.appendChild(pendingPhotoEl);
+    scrollDown();
+  }
+  function hidePendingPhoto() {
+    if (pendingPhotoEl) pendingPhotoEl.remove();
+    pendingPhotoEl = null;
+  }
+
+  /** Upload the chosen photos one at a time, then say what happened once. */
+  function sendPhotos(items) {
+    if (photoBusy || !items.length) return;
+    var room = MAX_PHOTOS - sessionPhotos().length;
+    if (room <= 0) return photoProblem('photoTooMany', [], 0);
+    var extra = items.length > room;
+    items = items.slice(0, room);
+    photoBusy = true;
+    setBusy(true);
+    applyChromeLight();
+    var sent = 0;
+    var finish = function (errKey, left) {
+      photoBusy = false;
+      hidePendingPhoto();
+      setBusy(false);
+      applyChromeLight();
+      if (errKey) return photoProblem(errKey, left, sent);
+      if (extra) return photoProblem('photoTooMany', [], sent);
+      reply(function () { continueAfterPhoto(t(sent > 1 ? 'photosAdded' : 'photoAdded', { n: sent })); });
+    };
+    var step = function (k) {
+      if (k >= items.length) return finish(null);
+      var item = items[k];
+      (item.prep ? Promise.resolve(item.prep) : preparePhoto(item.file)).then(function (prep) {
+        item.prep = prep;
+        showPendingPhoto(prep);
+        return uploadPhoto(prep).then(function (r) {
+          if (r.ok) { sent++; return step(k + 1); }
+          var e = r.error;
+          var key = e === 'too_many_files' ? 'photoTooMany'
+            : e === 'attachments_unavailable' || e === 'invalid_action' || e === 'not_configured' || e === 'disabled' ? 'photoUnavailable'
+            : e === 'file_too_large' && prep.pdf ? 'photoTooBig'
+            : e === 'invalid_file' || e === 'file_too_large' ? 'photoUnsupported'
+            : 'photoFailed';
+          if (e === 'attachments_unavailable' || e === 'invalid_action') { state.erp.attachments = false; writeState(); }
+          finish(key, key === 'photoFailed' ? items.slice(k) : []);
+        });
+      }, function (key) {
+        finish(typeof key === 'string' ? key : 'photoUnsupported', []);
+      });
+    };
+    step(0);
+  }
+
+  /** Something went wrong: say so plainly, offer WhatsApp, and let the visitor carry on. */
+  function photoProblem(key, left, sent) {
+    failedPhotos = left || [];
+    reply(function () {
+      var done = sent ? t(sent > 1 ? 'photosAdded' : 'photoAdded', { n: sent }) + '\n' : '';
+      var opts = [];
+      if (failedPhotos.length) opts.push({ label: t('retry'), act: 'photoRetry', primary: true });
+      opts.push({ label: t('photoContinue'), act: 'photoContinue', subtle: !!failedPhotos.length });
+      bot(done + t(key, { n: MAX_PHOTOS }), { options: opts, wa: true }, { kind: 'STATUS' });
+    });
+  }
+
+  /** After a photo: confirm it, then give back the step the visitor was on. */
+  function continueAfterPhoto(text) {
+    var cur = current();
+    var replay = cur && ['menu', 'categories', 'subcategories', 'products', 'ask', 'tech', 'req', 'summary', 'edit'].indexOf(cur.id) !== -1;
+    if (replay) {
+      if (text) bot(text, null, { kind: 'STATUS' });
+      return go(cur.id, cur.p, { noPush: true, delay: 1 });
+    }
+    bot(text || t('productNext'), { options: answerOptions() }, { kind: 'STATUS' });
+  }
+
   /* ========================================================== Open / close */
   function toggle(open) {
     state.open = open;
@@ -1718,7 +2140,7 @@
       } else {
         renderAll();
       }
-      setTimeout(function () { var b = log.querySelector('.jk-cb-opt:not([disabled]), .jk-cb-form input'); if (b && window.innerWidth > 600) try { b.focus({ preventScroll: true }); } catch (e) { /* */ } }, 350);
+      setTimeout(function () { var b = log.querySelector('.jk-cb-opt:not([disabled]), .jk-cb-sum-btn:not([disabled]), .jk-cb-form input'); if (b && window.innerWidth > 600) try { b.focus({ preventScroll: true }); } catch (e) { /* */ } }, 350);
     } else {
       launcher.focus();
       flushOnLeave();
@@ -1747,6 +2169,12 @@
   });
   document.addEventListener('click', function (e) { if (!langMenu.hidden && !e.target.closest('.jk-cb-langwrap')) { langMenu.hidden = true; langBtn.setAttribute('aria-expanded', 'false'); } });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && state.open) { if (!langMenu.hidden) langMenu.hidden = true; else toggle(false); } });
+  attachBtn.addEventListener('click', pickPhoto);
+  fileInput.addEventListener('change', function () {
+    var files = Array.prototype.slice.call(fileInput.files || []);
+    fileInput.value = '';
+    if (files.length) sendPhotos(files.map(function (f) { return { file: f }; }));
+  });
   composer.addEventListener('submit', function (e) {
     e.preventDefault();
     var text = input.value.replace(/\s+/g, ' ').trim().slice(0, 1000);
